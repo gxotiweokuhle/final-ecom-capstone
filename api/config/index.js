@@ -1,6 +1,7 @@
 // db connection
-require("dotenv").config()
+
 const {createPool} = require('mysql')
+require("dotenv").config()
 const connection = createPool({
     host: process.env.dbHost,
     database: process.env.dbName,
@@ -10,4 +11,12 @@ const connection = createPool({
     connectionLimit: 30 
 })
 
-modules.exports = connection;
+connection.query('SELECT 1', (error) => {
+    if (error) {
+        console.error('Error connecting to the database:', error);
+    } else {
+        console.log('Connected to database!');
+    }
+});
+
+module.exports = connection;

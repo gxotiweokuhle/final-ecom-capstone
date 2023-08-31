@@ -1,11 +1,12 @@
+//allow crud operations for cart
+
 const bodyParser = require('body-parser')
 const db = require('../config')
-class Products{
-    getProducts(req,res){
+class Cart{
+    getItems(req,res){
         const query =`
-        SELECT prodID,imageUrl,prodName,artist,details,category,price,quantity
-        FROM Products
-       
+        SELECT cartID, userID,prodID,imageUrl,prodName,price,quantity
+        FROM Cart
         `
         db.query(query,(err,results)=>{
             if(err) throw err
@@ -15,11 +16,11 @@ class Products{
             })
         })
     }
-    getProduct(req,res){
+    getItem(req,res){
         const query =`
-        SELECT prodID,imageUrl,prodName,artist,details,category,price,quantity
-        FROM Products
-        WHERE prodID = ${req.params.id}
+        SELECT cartID, userID,prodID,imageUrl,prodName,price,quantity
+        FROM Cart
+        WHERE cartID = ${req.params.id}
         `
         db.query(query,(err,results)=>{
             if(err) throw err
@@ -29,46 +30,47 @@ class Products{
             })
         })
     }
-    productUpdate(req,res){
+    updateItem(req,res){
         const query = `
-        UPDATE Products
+        UPDATE Cart
         SET ?
-        WHERE prodID= ${req.params.id}
+        WHERE cartID= ${req.params.id}
         `
         db.query(query,[req.body],(err,results)=>{
             if(err) throw err
             res.json({
                 status:res.statusCode,
-                msg:"Pruduct successfully updated"
+                msg:"Cart item successfully updated"
             })
         })
     }
-    addProduct(req,res){
+    addItem(req,res){
         const query =`
-        INSERT INTO Products
+        INSERT INTO Cart
+        SELECT 
         SET ?;
         `
         db.query(query,[req.body],(err)=>{
             if(err) throw err
             res.json({
                 status:res.statusCode,
-                msg:"Product added successfully"
+                msg:"Cart item added successfully"
             })
         })
     }
-    deleteProduct(req,res){
+    deleteItem(req,res){
         const query =`
-        DELETE FROM Products
-        WHERE prodID = ${req.params.id}
+        DELETE FROM Cart
+        WHERE cartID = ${req.params.id}
         `
         db.query(query,(err)=>{
             if(err) throw err
             res.json({
                 status:res.statusCode,
-                msg:"This product has been deleted"
+                msg:"This cart item has been deleted"
             })
         })
     }
 
 }
-module.exports = Products
+module.exports = Cart;
