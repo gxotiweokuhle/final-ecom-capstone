@@ -35,6 +35,9 @@ class Users{
             })
         })
     }
+    //update user details in a database
+    //check user pass exists in the req body of dt, if it does we hash it and add salt rounds(add characters) to the function
+    //use ? as placeholder to insert dt(actual data) to be updated
     updateUser(req,res){
         const dt = req.body
         if(dt.userPass){
