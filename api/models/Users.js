@@ -4,7 +4,7 @@
 const db = require('../config')
 const {hash,compare,hashSync} = require('bcrypt')//encryption of pswd
 const {tokenCreate} = require('../middleware/AuthenticateUser')
-const bodyParser = require('body-parser')
+
 
 class Users{
     getUsers(req,res){
@@ -72,62 +72,92 @@ class Users{
             })
         })
     }
-    async registerUser(req,res){
-        const dt = req.body
-        dt.userPass = hash(dt.userPass,15)
+    // async registerUser(req,res){
+    //     const data = req.body
+    //     data.userPass = hash(data.userPass,15)
 
-        const payload ={
-            emailAdd: dt.emailAdd,
-            userPass: dt.userPass
+    //     const payload ={
+    //         emailAdd: data.emailAdd,
+    //         userPass: data.userPass
+    //     }
+    //     const query = `
+    //     INSERT INTO Users
+    //     SET ?;
+    //     `
+    //     const token = tokenCreate(payload)
+    //     db.query(query,[data],(err)=>{
+    //         if(err) throw err
+    //         res.json({
+    //             status:res.statusCode,
+    //             msg:"You have signed up"
+    //         })
+    //     })
+    // }
+    async registerUser(req,res) {
+        const data = req.body;
+
+        if (!data.userPass) {
+            return res.json ({
+                status: res.statusCode,
+                msg: "Password is required"
+            })
         }
+
+        data.userPass = await hash(data.userPass, 15);
+
+        const user = {
+            emailAdd: data.emailAdd,
+            userPass: data.userPass
+        }
+
         const query = `
-        INSERT INTO Users
-        SET ?;
-        `
-        const token = tokenCreate(payload)
-        db.query(query,[dt],(err)=>{
+            INSERT INTO Users
+            SET ?;
+            `
+        
+        db.query(query, [data], (err) => {
             if(err) throw err
-            res.json({
-                status:res.statusCode,
-                msg:"You have signed up"
+
+            let token = tokenCreate(user);
+            res.json ({
+                status: res.statusCode,
+                msg: "You are registered"
             })
         })
     }
-    loginUser(req,res){
-        const {emailAdd,userPass} = req.body
-        const query =`
-        SELECT CONCAT(firstName,'',lastName)'User Fullname',emailAdd,userPass
-        FROM Users
-        WHERE emailAdd = ${emailAdd}
-        `
-        db.query(query,async(err,result)=>{
-            if(err) throw err
-            if (!result?.length) {
-                res.json({
-                    status:res.statusCode,
-                    msg:"You have entered wrong email"
-                }) 
-            } else {
-                await compare(userPass,result[0].userPass,(compErr,compResult)=>{
-                    if(compErr) throw compErr
 
-                    const token = tokenCreate({emailAdd,userPass})
-                    if (compResult) {
-                        res.json({
-                            status:res.statusCode,
-                            token,
-                            msg:"You are logged in"
-                        })
-                    } else {
-                        res.json({
-                            status: res.statusCode,
-                            msg:"Incorrect password or would you like sign up"
-                        })
-                    }
-                })
-            }
-        })
-    }
+loginUser(req, res) {
+    const { emailAdd, userPass } = req.body;
+  
+    const query = `
+      SELECT userID, firstName, lastName,
+      gender, userDOB, emailAdd,
+      userPass, profileUrl, Role
+      FROM Users
+      WHERE emailAdd = '${emailAdd}';
+    `;
+  
+    db.query(query, async (err, result) => {
+      if (err) throw err;
+      
+      if (!result?.length) {
+        res.json({ status: res.statusCode, msg: "You provided a wrong email." });
+      } else {
+        compare(userPass, result[0].userPass, (compareErr, compareResult) => {
+          if (compareErr) throw compareErr;
+          const token = tokenCreate({ emailAdd, userPass });
+          
+          if (compareResult) {
+
+            
+            res.json({ msg: "Logged in", token, result: result[0] });
+          } else {
+            res.json({ status: res.statusCode, msg: "Invalid password or you have not registered" });
+          }
+        });
+      }
+    });
+  }
 
 }
 module.exports = Users

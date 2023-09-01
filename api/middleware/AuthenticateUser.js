@@ -11,7 +11,7 @@ function tokenCreate(user) {
     return sign({
         emailAdd:user.emailAdd,
         userPass:user.userPass
-        },key,
+        },process.env.SECRET_KEY,
         {expiresIn:'1h'}
         )
 }
@@ -20,17 +20,19 @@ function tokenCreate(user) {
 //using payload to store the token we need security in verifying the token
 //and error handling if authorization failed 
 function verifyToken(req,res,next){
-    const token = req.headers["authorization"]
+    try{
+        const token = req.headers["authorization"]
+        
+        next()
 
-    return verify(token,key,(err,decoded)=>{
-        if(err){
-            res.json({
-                msg:"Token authontication failed."
-            })
-        }
-        req.decoded = decoded
-        next();
-    })
+    }
+    catch(e){
+        res.json({
+            status: res.statusCode,
+            msg: e.message
+        })
+    }
+ 
 } 
 
 module.exports ={

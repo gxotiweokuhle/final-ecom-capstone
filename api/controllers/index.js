@@ -46,12 +46,7 @@ routes.delete('/product/:id',(req,res)=>{
 // routes.get('/orders',(req,res)=>{
 //     orders.getOrders(req,res)
 // })
-// routes.get('/product/:id',(req,res)=>{
-//     orders.getOrder(req,res)
-// })
-// routes.delete('/product/:id',(req,res)=>{
-//     orders.deleteOrder(req,res)
-// })
+
 
 
 
