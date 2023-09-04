@@ -16,20 +16,7 @@ class Cart{
             })
         })
     }
-    getItem(req,res){
-        const query =`
-        SELECT cartID, userID,prodID,imageUrl,prodName,price,quantity
-        FROM Cart
-        WHERE cartID = ${req.params.id}
-        `
-        db.query(query,(err,results)=>{
-            if(err) throw err
-            res.json({
-                status:res.statusCode,
-                results
-            })
-        })
-    }
+   
     updateItem(req,res){
         const query = `
         UPDATE Cart
@@ -46,16 +33,32 @@ class Cart{
     }
     addItem(req,res){
         const query =`
-        INSERT INTO Cart
+        INSERT INTO Cart(userID, prodID, imageUrl, prodName, price, quantity)
         SELECT 
-        SET ?;
-        `
+        o.userID,
+        p.prodID,
+        p.imageUrl,
+        p.prodName,
+        p.price,
+        o.quantity
+        FROM Orders o
+        INNER JOIN Products p ON o.prodID = p.prodID;
+        `;
         db.query(query,[req.body],(err)=>{
-            if(err) throw err
-            res.json({
-                status:res.statusCode,
-                msg:"Cart item added successfully"
-            })
+            if(err){
+                console.error(err);
+                res.status(500).json({
+                    msg: "Error adding item to cart",
+                    error: err
+                });
+            }
+            else{
+                res.json({
+                    status:res.statusCode,
+                    msg:"Cart item added successfully"
+                })
+                
+            }
         })
     }
     deleteItem(req,res){
