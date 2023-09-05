@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container allprod">
      <div class="row mb-4">
              <!-- <div class="col"> <FilterComp @apply-filter="newdataDisplay"></FilterComp></div>
              <div class="col"><SortComp @apply-sort="newdataDisplay"></SortComp></div> -->
@@ -21,12 +21,14 @@
          <div class="flex-container" v-else-if="products" id="procard">
              <div class="card mb-5" v-for="product of products" :key="product.prodID">
                  <div class="card-body">
-                     <img :src="product.imageUrl">
+                     <div class="img">
+                        <img class="img-fluid" :src="product.imageUrl">
+                     </div>
                      <h3 class="mt-2">{{product.prodName}}</h3>
                      <p>Price: R {{product.price}}</p>
-                     <router-link class="btn btn-primary" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
-                     <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">Add to Cart</router-link>
-                 </div>
+                    <router-link class="btn btn-primary mx-2" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
+                    <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">Add to Cart</router-link>
+                </div>
              </div>
          </div>
          <div v-else>
@@ -71,3 +73,63 @@
         
      }
  </script>
+ <style scoped>
+
+ @import url('https://fonts.googleapis.com/css2?family=REM:wght@200&display=swap');
+      img{
+         max-width: 300px;
+         margin-top: 15px;
+     }
+     .btn:hover{
+     background:#2c3e50 ;
+     padding: 1rem;
+     color: rgb(200,160,4);
+     }
+     .flex-container{
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: space-evenly;
+       align-content: center;
+       font-family: 'REM', sans-serif;
+     }
+    
+     /* .card-body:hover img{
+         scale: 1.1;
+     }  */
+     /* .card-body:hover{
+         box-shadow: 0px 0px 30px 20px rgb(229, 196, 30);
+     }*/
+     @media screen and (max-width: 300px){
+         img{
+             max-width: 200px;
+         }
+        
+         
+     }
+     @media screen and (max-width: 312px){
+         img{
+             max-width: 190px;
+         }
+         
+     }
+     @media screen and (max-width: 320px){
+         img{
+             max-width: 190px;
+ 
+         }
+         
+     }
+     @media screen and (max-width: 330px){
+         img{
+             max-width: 100px;
+             /* max-height: 180px; */
+         }
+         
+     }
+     .btn{
+         background: rgb(200,160,4);
+         box-shadow: 0 0 25px rgb(200,160,4);
+         gap: 20px;
+     }
+ 
+ </style>
