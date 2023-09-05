@@ -33,11 +33,12 @@ class Cart{
         })
     }
     addItem(req,res){
+        const {prodID, quantity} = req.body;
         const query =`
         INSERT INTO Cart(prodID, quantity)
         VALUES (?, ?);
         `;
-        db.query(query,[req.body],(err)=>{
+        db.query(query,[prodID, quantity],(err)=>{
             if(err){
                 console.error(err);
                 res.status(500).json({
