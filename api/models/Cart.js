@@ -5,8 +5,9 @@ const db = require('../config')
 class Cart{
     getItems(req,res){
         const query =`
-        SELECT cartID, userID,prodID,imageUrl,prodName,price,quantity
-        FROM Cart;
+        SELECT c.productID, c.quantity, p.prodName, p.price, p.imageUrl
+        FROM Cart c
+        JOIN Products p ON c.prodID = p.prodID;
         `
         db.query(query,(err,results)=>{
             if(err) throw err
