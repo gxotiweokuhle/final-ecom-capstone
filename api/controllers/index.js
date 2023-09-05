@@ -52,12 +52,12 @@ routes.get('/user/:id/cart/order',(req,res)=>{
 
 //cart routes
 
-routes.get('/user/:id/cart',(req,res)=>{
+// routes.get('/user/:id/cart',(req,res)=>{
+//     cart.getItems(req,res)
+// })
+routes.get('/cart',(req,res)=>{
     cart.getItems(req,res)
 })
-// routes.get('/user',(req,res)=>{
-//     cart.getItem(req,res)
-// })
 routes.post('/user/:id/cart',bodyParser.json(),(req,res)=>{
     cart.addItem(req,res)
 })
