@@ -6,7 +6,7 @@ class Cart{
     getItems(req,res){
         const query =`
         SELECT cartID, userID,prodID,imageUrl,prodName,price,quantity
-        FROM Cart
+        FROM Cart;
         `
         db.query(query,(err,results)=>{
             if(err) throw err
