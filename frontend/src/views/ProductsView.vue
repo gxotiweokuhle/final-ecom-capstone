@@ -1,12 +1,17 @@
 <template>
+    <ProductsComp/>
+ </template>
+ <script>
+   
+     import ProductsComp from '@/components/ProductsComp.vue';
     
-</template>
-<script>
-
-    export default{
+     export default{
         
-    }
-</script>
-<style scoped>
-
-</style>
+     components: { ProductsComp},  
+ 
+     };
+ 
+ </script>
+ <style scoped>
+ 
+ </style>

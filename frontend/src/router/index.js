@@ -18,7 +18,7 @@ const routes = [
   },
   
   {
-    path: '/login',
+    path: '/user/login',
     name: 'login',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -43,7 +43,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SingleView.vue')
   },
   {
-    path: '/cart',
+    path: '/user/:id/cart',
     name: 'cart',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -51,7 +51,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/CartView.vue')
   },
   {
-    path: '/checkout',
+    path: '/orders',
     name: 'checkout',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

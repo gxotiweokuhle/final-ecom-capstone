@@ -16,7 +16,7 @@
           </a>
           <ul class="dropdown-menu bg-black">
             <li><a class="dropdown-item text-white" href="/register">Sign Up!</a></li>
-            <li><a class="dropdown-item text-white" href="/login">Login</a></li>
+            <li><a class="dropdown-item text-white" href="/user/login">Login</a></li>
             
           </ul>
         </li>
@@ -24,7 +24,7 @@
           <a class="nav-link active text-white " href="/products">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active text-white " href="/cart">Cart</a>
+          <a class="nav-link active text-white " href="/user/:id/cart">Cart</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="/about">About</a>

@@ -1,12 +1,15 @@
 <template>
-    
+    <div>
+        <SpinnerComp />
+    </div>
 </template>
-<script>
 
-    export default{
-        
+<script>
+import SpinnerComp from '@/components/SpinnerComp.vue'
+    export default {
+        name: 'SpinnerView',
+        components: {
+            SpinnerComp
+        }
     }
 </script>
-<style scoped>
-
-</style>
