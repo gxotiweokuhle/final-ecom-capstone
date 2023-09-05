@@ -35,15 +35,7 @@ class Cart{
     addItem(req,res){
         const query =`
         INSERT INTO Cart(userID, prodID, imageUrl, prodName, price, quantity)
-        SELECT 
-        o.userID,
-        p.prodID,
-        p.imageUrl,
-        p.prodName,
-        p.price,
-        p.quantity
-        FROM Orders o
-        INNER JOIN Products p ON o.prodID = p.prodID;
+        VALUES (?, ?);
         `;
         db.query(query,[req.body],(err)=>{
             if(err){
