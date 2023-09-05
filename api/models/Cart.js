@@ -40,7 +40,7 @@ class Cart{
         p.imageUrl,
         p.prodName,
         p.price,
-        o.quantity
+        p.quantity
         FROM Orders o
         INNER JOIN Products p ON o.prodID = p.prodID;
         `;
