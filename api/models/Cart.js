@@ -34,7 +34,7 @@ class Cart{
     }
     addItem(req,res){
         const query =`
-        INSERT INTO Cart(userID, prodID, imageUrl, prodName, price, quantity)
+        INSERT INTO Cart(prodID, quantity)
         VALUES (?, ?);
         `;
         db.query(query,[req.body],(err)=>{
