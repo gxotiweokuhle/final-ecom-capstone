@@ -59,7 +59,72 @@ export default createStore({
         context.commit("setMessage", "An error occured")
       }
       },
-  }
+      async addProduct(context,payload){
+        try {
+          let {data} =await axios.post(`${cUrl}product`,payload)
+          if(data.msg){
+            context.dispatch("getProducts")
+            swal({
+              title:"Product adding",
+              text:data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+          
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
+      async updateProduct(context,payload){
+        try {
+          let {data} =await axios.patch(`${cUrl}product/${payload.prodID}`,payload)
+          if(data.msg){
+            context.dispatch("getProducts")
+            swal({
+              title:"Update",
+              text:data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
+      async deleteProduct(context,id){
+        try {
+          let {data}= await axios.delete(`${cUrl}product/${id}`)
+          if (data.msg) {
+            context.dispatch("getProducts")
+            swal({
+              title:"Product removal",
+              text: data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+          
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    }
 
   
 })

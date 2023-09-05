@@ -6,7 +6,7 @@
             <h1>Users</h1>
            <AddUser/>
           </div>
-          <div class="col table table-responsive">
+          <div class="col">
             <div class="userTable">
             <table
               class="table is-striped is-bordered mt-2 is-fullwidth array-lists"
@@ -14,7 +14,7 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>FullName</th>
+                  <th>Name</th>
                   <th>Email</th>
                   <th>Gender</th>
                   <th>Age</th>
@@ -26,12 +26,14 @@
               <tbody>
                 <tr v-for="user in users" :key="user.userID" class="bord">
                   <td>{{ user.userID }}</td>
-                  <td>{{ user.fullName }}</td>
-                  <td>{{ user.emailAdd }}</td>
-                  <td>{{ user.Gender }}</td>
-                  <td>{{ user.userAge }}</td>
-                  <td>{{ user.userRole }}</td>
-                  <td><img class="tableImg" :src="user.userProfile" alt="" /></td>
+                  <td>{{ user.firstName }}</td>
+                  <td>{{ user.lastName }}</td>
+                  <td>{{ user.gender }}</td>
+                  <td>{{ user.userDOB }}</td>
+                  <td>{{ user.emailAdd}}</td>
+                  <td>{{ user.userPass}}</td>
+                  <td>{{ user.Role}}</td>
+                  <td><img class="tableImg" :src="user.profileUrl" alt="" /></td>
                   <td>
                     <button type="button" class="btn btn-primary" @click="setId(user.userID)" data-bs-toggle="modal" data-bs-target="#Update" data-bs-whatever="@mdo">Update</button>
                     <button type="button" class="btn btton" @click="deleteUser" data-bs-toggle="modal" data-bs-target="#exampleModal" id="delete-row" >
@@ -98,11 +100,47 @@
     </div>
   </template>
 <script>
+import AddUser from '@/components/AddUser.vue'
 
     export default{
-        
+      components:{
+        AddUser
+      },
     }
 </script>
 <style scoped>
-
+   button{
+    margin: 0.5rem;
+    padding: 0.5rem;
+    background:#2c3e50;
+    color:white;
+    border-radius: 1rem;
+    font-family: 'REM', sans-serif;
+}
+button:hover{
+  background: rgb(200,160,4);
+  color:#2c3e50
+}
+  .tableImg {
+      width: 120px;
+      height: auto;
+  }
+  table{
+    width: 90%;
+  }
+  .userTable{
+  overflow-x: scroll;
+  padding: 2rem;
+  max-width: 100%;
+}
 </style>
+<!-- <template>
+  <div>
+    <p>usertable</p>
+
+  </div>
+</template>
+<script></script>
+<style scoped>
+
+</style> -->
