@@ -141,20 +141,20 @@
                   }
                 }
           },
-          created(){
-            
-                            this.products.forEach((product) => {
-                    if (product.prodID == this.data.prodID) {
-                    this.data.prodName = product.prodName;
-                    this.data.quantity = product.quantity;
-                    this.data.price = product.price;
-                    this.data.category = product.category;
-                    this.data.details = product.details;
-                    this.data.artist = product.artist;
-                    this.data.imageUrl = product.imageUrl;
-                    }
-                });
-          },
+          // created(){
+          //   console.log(this.products);
+          //                   this.products.forEach((product) => {
+          //           if (product.prodID == this.data.prodID) {
+          //           this.data.prodName = product.prodName;
+          //           this.data.quantity = product.quantity;
+          //           this.data.price = product.price;
+          //           this.data.category = product.category;
+          //           this.data.details = product.details;
+          //           this.data.artist = product.artist;
+          //           this.data.imageUrl = product.imageUrl;
+          //           }
+          //       });
+          // },
         computed: {
         products() {
           return this.$store.state.products
@@ -164,9 +164,10 @@
         this.$store.dispatch("getProducts")
         },
         methods: {
+         
           newdataDisplay(data){
                this.outputData=data;
-             
+              
             },
           setId(x){
               this.data.prodID =x
@@ -204,4 +205,6 @@
       padding: 2rem;
       max-width: 100%;
     }
+    
+
     </style>

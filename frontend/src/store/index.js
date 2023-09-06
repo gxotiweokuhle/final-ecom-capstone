@@ -109,6 +109,33 @@ export default createStore({
           context.commit("setMessage","An error occured")
         }
       },
+      async registerUser({ commit }, userData) {
+        try {
+          const response = await axios.post(`${cUrl}register`, userData);
+          const user = response.data;
+          commit("setUser", user);
+          if (response.status === 200) {
+            Swal.fire({
+              icon: "success",
+              title: "Registration Successful",
+              text: "You have successfully registered.",
+            });
+            this.$router.push("/login");
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Registration Failed",
+              text: "An error occurred during registration.",
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.message,
+          });
+        }
+      },
 
 
   
