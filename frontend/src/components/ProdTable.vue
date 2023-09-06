@@ -142,18 +142,18 @@
                 }
           },
           created(){
-            for (product in this.products) {
-                if (product.prodID == this.data.prodID){
-                    this.data.prodName = product.prodName,
-                    this.data.quantity= product.quantity,
-                    this.data.price= product.price,
-                    this.data.category= product.category,
-                    this.data.details= product.details;
-                    this.data.artist= product.artist;
-                    this.data.imageUrl= product.imageUrl;
-                }
-                
-            }
+            
+                            this.products.forEach((product) => {
+                    if (product.prodID == this.data.prodID) {
+                    this.data.prodName = product.prodName;
+                    this.data.quantity = product.quantity;
+                    this.data.price = product.price;
+                    this.data.category = product.category;
+                    this.data.details = product.details;
+                    this.data.artist = product.artist;
+                    this.data.imageUrl = product.imageUrl;
+                    }
+                });
           },
         computed: {
         products() {
@@ -182,6 +182,7 @@
       };
     </script>
     <style scoped>
+    
     button{
         margin: 0.5rem;
         padding: 0.5rem;

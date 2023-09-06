@@ -1,8 +1,8 @@
 <template>
     <div class="container allprod">
      <div class="row mb-4">
-             <!-- <div class="col"> <FilterComp @apply-filter="newdataDisplay"></FilterComp></div>
-             <div class="col"><SortComp @apply-sort="newdataDisplay"></SortComp></div> -->
+             <div class="col"> <FilterComp @apply-filter="newdataDisplay"></FilterComp></div>
+             <!-- <div class="col"><SortComp @apply-sort="newdataDisplay"></SortComp></div> --> 
              
          </div>
          
@@ -39,11 +39,11 @@
  
  <script>
      import SpinnerComp from '@/components/SpinnerComp.vue';
-    //  import FilterComp from '@/components/FilterComp.vue';
+     import FilterComp from '@/components/FilterComp.vue';
     //  import SortComp from '../components/SortComp.vue';
  
      export default{
-     components: { SpinnerComp}, 
+     components: { SpinnerComp, FilterComp}, 
      data(){
          return{
              outputData:[],
@@ -101,7 +101,7 @@
      }*/
      @media screen and (max-width: 300px){
          img{
-             max-width: 200px;
+             max-width: 300px;
          }
         
          
@@ -121,7 +121,7 @@
      }
      @media screen and (max-width: 330px){
          img{
-             max-width: 100px;
+             max-width: 80px;
              /* max-height: 180px; */
          }
          
