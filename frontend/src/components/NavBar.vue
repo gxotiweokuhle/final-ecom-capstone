@@ -15,7 +15,7 @@
             Account
           </a>
           <ul class="dropdown-menu bg-black">
-            <li><a class="dropdown-item text-white" href="/register">Sign Up!</a></li>
+            <li><a class="dropdown-item text-white" href="/user/register">Sign Up!</a></li>
             <li><a class="dropdown-item text-white" href="/user/login">Login</a></li>
             
           </ul>

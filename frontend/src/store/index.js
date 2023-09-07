@@ -1,6 +1,9 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import { useCookies } from 'vue3-cookies'
+import router from '../router/index'
+import swal from 'sweetalert';
+
 
 const cUrl = "https://capstone-artstudio.onrender.com/"
 const {cookies} = useCookies();
@@ -12,7 +15,8 @@ export default createStore({
     product: null,
     users: null,
     user: null,
-    msg:null
+    msg:null, 
+   
   },
 
   mutations: {
@@ -30,7 +34,8 @@ export default createStore({
     },
     setMessage:(state,msg)=>{
       state.msg = msg;
-    }
+    },
+   
   },
   actions: {
     async getProducts(context) {
@@ -76,22 +81,7 @@ export default createStore({
           context.commit("setMessage","An error occured")
         }
       },
-      async updateProduct(context,payload){
-        try {
-          let {data} =await axios.patch(`${cUrl}product/${payload.prodID}`,payload)
-          if(data.msg){
-            context.dispatch("getProducts")
-            swal({
-              title:"Update",
-              text:data.msg,
-              icon:"success",
-              timer:2000
-            })
-          }
-        } catch (e) {
-          context.commit("setMessage","An error occured")
-        }
-      },
+   
       async deleteProduct(context,id){
         try {
           let {data}= await axios.delete(`${cUrl}product/${id}`)
@@ -109,32 +99,38 @@ export default createStore({
           context.commit("setMessage","An error occured")
         }
       },
-      async registerUser({ commit }, userData) {
+
+      async registerUser(context, payload) {
+        console.log("Reached");
         try {
-          const response = await axios.post(`${cUrl}register`, userData);
+          const response = await axios.post(`${cUrl}user/register`, payload);
+         
           const user = response.data;
-          commit("setUser", user);
+          context.commit("setUser", user);
           if (response.status === 200) {
-            Swal.fire({
+            await swal({
               icon: "success",
               title: "Registration Successful",
               text: "You have successfully registered.",
             });
-            this.$router.push("/login");
+            router.push("/user/login");
           } else {
-            Swal.fire({
+            await swal({
               icon: "error",
               title: "Registration Failed",
               text: "An error occurred during registration.",
             });
           }
-        } catch (error) {
-          Swal.fire({
+            
+        } catch (e) {
+          await swal({
             icon: "error",
             title: "Error",
-            text: error.message,
+            text: e.message,
           });
+              
         }
+
       },
 
 
