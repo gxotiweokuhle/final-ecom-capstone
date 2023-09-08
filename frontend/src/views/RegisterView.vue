@@ -44,11 +44,12 @@
                     <button class="submit">Submit</button>
                     <p class="signin">Already have an acount ? <a href="/user/login">Signin</a> </p>
 </form>
-<!-- <p v-if="registrationError" class="error">{{ registrationError }}</p> -->
+
     </div>
 </template>
 <script>
-import swal from 'sweetalert';
+import router from '../router/index'
+import Swal from 'sweetalert2';
 export default{
 
           data() {
@@ -61,167 +62,49 @@ export default{
             emailAdd: "",
             userPass: "",
             profileUrl: ""
-            // validation:{
-            //     firstName:{
-            //         isValid: true,
-            //         message:"Please fill out your Name."
-            //     },
-            //     lastName:{
-            //         isValid: true,
-            //         message:"Please fill out your Surname."
-            //     },
-            //     gender:{
-            //         isValid: true,
-            //         message:"Please fill out your identity."
-            //     },
-            //     userDOB:{
-            //         isValid: true,
-            //         message:"Please fill out your Date of Birth."
-            //     },
-            //     Role:{
-            //         isValid: true,
-            //         message:"Please fill specify your role to gain access."
-            //     },
-            //     userPass:{
-            //         isValid: true,
-            //         message:"Please enter your password."
-            //     },
-            //     profileUrl:{
-            //         isValid: true,
-            //         message:"Please enter your url."
-            //     }
-
-            // }
+           
           
      
         };
       },
       methods: {
         async registerUser(){
-            const isFormValid = this.validateForm();
-            if(isFormValid){
-                try{
-                    const respond = await this.$store.dispatch("registerUser", {
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        gender: this.gender,
-                        emailAdd: this.emailAdd,
-                        userDOB:this.userDOB,
-                        userPass: this.userPass,
-                        Role: this.Role,
-                        profileUrl: this.profileUrl,
-                    });
-                    // this.$router.push("/user/login");
-                    if(respond && respond.success){
-                       await swal.fire({
-                            icon: "success",
-                            title: "Registration successful",
-                            text: "You are now registered, please log in",
-                        })
-                        // .then(() => {
-                        // this.$router.push("/user/login");
-                        // });
-                        router.push("/user/login");
-                        
-                    } else {
-                       await swal.fire({
-                            icon: "error",
-                            title: "Registration failed",
-                            text: respond.error || "Unexpected error",
-                        });
-                    }
-                    // this.$router.push("/user/login");
-                } catch(e){
-                    console.error("Registration error: ", e);
-                }
-                // form validation
-
-
-            }
-            else{
-               await swal.fire({
-                        icon: "error",
-                        title: "Invalid input",
-                        text: "Please correct the form errors and try again.",
+          
+            try{
+                const respond = await this.$store.dispatch("registerUser", {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    gender: this.gender,
+                    emailAdd: this.emailAdd,
+                    userDOB:this.userDOB,
+                    userPass: this.userPass,
+                    Role: this.Role,
+                    profileUrl: this.profileUrl,
                 });
+                
+                if(respond && respond.success){
+                   await Swal.fire({
+                        icon: "success",
+                        title: "Registration successful",
+                        text: "You are now registered, please log in",
+                    })
+                    
+                    router.push("/user/login");
+                    
+                } else if (respond && respond.error){
+                   await Swal.fire({
+                        icon: "error",
+                        title: "Registration failed",
+                        text: respond.error || "Unexpected error",
+                    });
+                }
+                
+            } catch(e){
+                console.error("Registration error: ", e);
             }
+            
         },
-    validateForm(){
-        let isFormValid = true;
-
-        if (!this.firstName) {
-        this.validation.firstName.isValid = false;
-        this.validation.firstName.message = "Firstname is required";
-        isFormValid = false;
-      } else {
-        this.validation.firstName.isValid = true;
-       
-      }
-
-      if (!this.lastName) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "Lastname is required";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-
-      if (!this.gender) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "gender is required";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-
-      if (!this.userDOB) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "date of birth is required";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-
-      if (!this.profileUrl) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "gender is required";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-
-      if (!this.emailAdd) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "your email is required";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-      if (!this.userPass) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "your password is required";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-
-      if (!this.Role) {
-        this.validation.lastName.isValid = false;
-        this.validation.lastName.message = "enter your role";
-        isFormValid = false;
-      } else {
-        this.validation.lastName.isValid = true;
-       
-      }
-      return isFormValid;
-    }
-    
+   
 }
 };
 </script>

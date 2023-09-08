@@ -3,27 +3,73 @@
     <div class="container">
         <div class="form-container">
                 <p class="title">Login</p>
-                <form class="form">
+                <form class="form" @submit.prevent="userLogin">
                     <div class="input-group">
                         <label for="email">Email</label>
-			            <input type="email" name="email" id="email" placeholder="" required>
+			            <input type="email" name="email" id="email" placeholder="" v-model="emailAdd" required>
                     </div>
                     <div class="input-group">
                         <label for="password">Password</label>
-			            <input type="password" name="password" id="password" placeholder="" required>
+			            <input type="password" name="password" id="password" placeholder=""  v-model="userPass" required>
                        
                     </div>
-                    <button class="sign mt-4">Log in</button>
+                    <button class="sign mt-4" type="submit">Log in</button>
                     <p class="signin mt-4">Don't have an account ? <a href="/user/register">Register</a> </p>
                 </form>
             </div>
     </div>
 </template>
 <script>
-
+import Swal from "sweetalert2";
     export default{
-        
+      data() {
+    return {
+      emailAdd: "",
+      userPass: "",
+    };
+  },
+ 
+  methods: {
+    async userLogin() {
+  console.log("Reached");
+  try {
+    const payload = {
+      emailAdd: this.emailAdd,
+      userPass: this.userPass,
+    };
+    const respond = await this.$store.dispatch("loginUser", payload);
+    if (respond.token && respond.result) {
+      await Swal.fire({
+        icon: "success",
+        title: "Logged in Successfully",
+        text: "You are now logged in!",
+      });
+      router.push("/");
+    } else {
+      const errMsg = "Unexpected error";
+      await Swal.fire({
+        icon: "error",
+        title: "Login failed",
+        text: errMsg,
+      });
     }
+  } catch (err) {
+    console.error("Error while logging in: ", err);
+  }
+},
+
+
+
+
+
+
+
+
+
+
+
+    }
+  }
 </script>
 <style scoped>
 
@@ -73,7 +119,7 @@
   outline: 0;
   background-color: white;
   padding: 0.75rem 1rem;
-  color: white;
+  color: black;
 }
 
 .input-group input:focus {
