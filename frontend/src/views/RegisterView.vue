@@ -173,11 +173,55 @@ export default{
         isFormValid = false;
       } else {
         this.validation.lastName.isValid = true;
-        this.validation.lastName.message = "";
+       
       }
 
+      if (!this.userDOB) {
+        this.validation.lastName.isValid = false;
+        this.validation.lastName.message = "date of birth is required";
+        isFormValid = false;
+      } else {
+        this.validation.lastName.isValid = true;
+       
+      }
 
+      if (!this.profileUrl) {
+        this.validation.lastName.isValid = false;
+        this.validation.lastName.message = "gender is required";
+        isFormValid = false;
+      } else {
+        this.validation.lastName.isValid = true;
+       
+      }
+
+      if (!this.emailAdd) {
+        this.validation.lastName.isValid = false;
+        this.validation.lastName.message = "your email is required";
+        isFormValid = false;
+      } else {
+        this.validation.lastName.isValid = true;
+       
+      }
+      if (!this.userPass) {
+        this.validation.lastName.isValid = false;
+        this.validation.lastName.message = "your password is required";
+        isFormValid = false;
+      } else {
+        this.validation.lastName.isValid = true;
+       
+      }
+
+      if (!this.Role) {
+        this.validation.lastName.isValid = false;
+        this.validation.lastName.message = "enter your role";
+        isFormValid = false;
+      } else {
+        this.validation.lastName.isValid = true;
+       
+      }
+      return isFormValid;
     }
+    
 }
 };
 </script>
