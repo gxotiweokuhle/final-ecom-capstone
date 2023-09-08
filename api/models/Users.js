@@ -146,7 +146,7 @@ loginUser(req, res) {
             if (compareResult) {
               res.json({
                 msg: "Logged in",
-                token: createToken({
+                token: tokenCreate({
                   emailAdd,
                   userPass,
                 }),
