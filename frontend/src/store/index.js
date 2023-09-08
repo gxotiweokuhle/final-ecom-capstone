@@ -86,7 +86,7 @@ export default createStore({
           let {data} =await axios.post(`${cUrl}product`,payload)
           if(data.msg){
             context.dispatch("getProducts")
-            swal({
+            Swal({
               title:"Product adding",
               text:data.msg,
               icon:"success",
@@ -104,7 +104,7 @@ export default createStore({
           let {data}= await axios.delete(`${cUrl}product/${id}`)
           if (data.msg) {
             context.dispatch("getProducts")
-            swal({
+            Swal({
               title:"Product removal",
               text: data.msg,
               icon:"success",
@@ -121,25 +121,25 @@ export default createStore({
         console.log("Reached");
         try {
           const response = await axios.post(`${cUrl}user/register`, payload);
-         console.log("Res: ", res)
+        //  console.log("Res: ", res)
           const user = response.data;
           context.commit("setUser", user);
           if (response.status === 200) {
-            await swal({
+            await Swal.fire({
               icon: "success",
               title: "Registration Successful",
               text: "You have successfully registered.",
             });
             router.push("/user/login");
           } else {
-            await swal({
+            await Swal.fire({
               icon: "error",
               title: "Registration Failed",
               text: "An error occurred during registration.",
             });
           }
         } catch (e) {
-          await swal({
+          await Swal.fire({
             icon: "error",
             title: "Error",
             text: e.message,
@@ -182,10 +182,30 @@ export default createStore({
           });
         }
       },
+      async addItem(context, payload){
+        try{
+
+          const existingProduct = state.items.find((item) => item.productID === product.productID);
+
+          if (existingProduct) {
+            existingProduct.quantity++;
+          } else {
+            const response = await axios.post(`${cUrl}user/:id/cart`, payload); 
+    
+            if (response.ok) {
+              context.commit("addItem", product);
+            } else {
+              console.error('Error adding to cart:', response.statusText);
+            }
+          }
 
 
 
 
+        } catch{
+
+        }
+      }
 
 
 

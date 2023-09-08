@@ -20,6 +20,7 @@
     </div>
 </template>
 <script>
+import router from '../router/index'
 import Swal from "sweetalert2";
     export default{
       data() {
@@ -38,13 +39,13 @@ import Swal from "sweetalert2";
       userPass: this.userPass,
     };
     const respond = await this.$store.dispatch("loginUser", payload);
+    router.push("/");
     if (respond.token && respond.result) {
       await Swal.fire({
         icon: "success",
         title: "Logged in Successfully",
         text: "You are now logged in!",
       });
-      router.push("/");
     } else {
       const errMsg = "Unexpected error";
       await Swal.fire({
