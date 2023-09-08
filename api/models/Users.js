@@ -136,28 +136,50 @@ loginUser(req, res) {
       FROM Users
       WHERE emailAdd = '${emailAdd}';
     `;
-  
     db.query(query, async (err, result) => {
-      if (err) throw err;
+        if (err) throw err;
+        if (!result?.length) {
+          res.status(401).json({ msg: "Invalid email or password." });
+        } else {
+          await compare(userPass, result[0].userPass, (compareErr, compareResult) => {
+            if (compareErr) throw compareErr;
+            if (compareResult) {
+              res.json({
+                msg: "Logged in",
+                token: createToken({
+                  emailAdd,
+                  userPass,
+                }),
+                result: result[0],
+              });
+            } else {
+              res.status(401).json({ msg: "Invalid email or password." });
+            }
+          });
+        }
+      });
+    }    
+    // db.query(query, async (err, result) => {
+//       if (err) throw err;
       
-      if (!result?.length) {
-        res.json({ status: res.statusCode, msg: "You provided a wrong email." });
-      } else {
-        compare(userPass, result[0].userPass, (compareErr, compareResult) => {
-          if (compareErr) throw compareErr;
-          const token = tokenCreate({ emailAdd, userPass });
+//       if (!result?.length) {
+//         res.json({ status: res.statusCode, msg: "You provided a wrong email." });
+//       } else {
+//         compare(userPass, result[0].userPass, (compareErr, compareResult) => {
+//           if (compareErr) throw compareErr;
+//           const token = tokenCreate({ emailAdd, userPass });
           
-          if (compareResult) {
+//           if (compareResult) {
 
             
-            res.json({ msg: "Logged in", token, result: result[0] });
-          } else {
-            res.json({ status: res.statusCode, msg: "Invalid password or you have not registered" });
-          }
-        });
-      }
-    });
-  }
+//             res.json({ msg: "Logged in", token, result: result[0] });
+//           } else {
+//             res.json({ status: res.statusCode, msg: "Invalid password or you have not registered" });
+//           }
+//         });
+//       }
+//     });
+//   }
 
 }
 module.exports = Users
