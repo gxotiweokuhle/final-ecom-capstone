@@ -9,7 +9,7 @@ const {tokenCreate} = require('../middleware/AuthenticateUser')
 class Users{
     getUsers(req,res){
         const query =`
-        SELECT userID, CONCAT(firstName,'',lastName) 'User Fullname',
+        SELECT userID, CONCAT(firstName,' ',lastName) 'Fullname',
         gender,userDOB,emailAdd,profileUrl,Role
         FROM Users
         `
@@ -23,7 +23,7 @@ class Users{
     }
     getUser(req,res){
         const query =`
-        SELECT userID, CONCAT(firstName,'',lastName) 'User Fullname',gender,userDOB,emailAdd,profileUrl,Role
+        SELECT userID, CONCAT(firstName,' ',lastName) 'Fullname',gender,userDOB,emailAdd,profileUrl,Role
         FROM Users
         WHERE userID = ${req.params.id}
         `
