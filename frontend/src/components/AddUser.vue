@@ -11,45 +11,45 @@
                  <h1 class="modal-title fs-5" id="exampleModalLabel">Add user</h1>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
-               <div class="modal-body" @submit.prevent="registerUser">
+               <div class="modal-body" @submit.prevent="addUser">
                  <form>
                    <div class="mb-3">
                      <label for="Firstname" class="col-form-label">First name:</label>
-                     <input type="text"  v-model="data.firstName" class="form-control" id="Firstname"  placeholder="FirstName" required>
+                     <input type="text"  v-model="payload.firstName" class="form-control" id="Firstname"  placeholder="FirstName" required>
                    </div>
                    <div class="mb-3">
                      <label for="Surname" class="col-form-label">Last name:</label>
-                     <input type="text"  v-model="data.lastName" class="form-control" id="Surname"  placeholder="Surname" required>
+                     <input type="text"  v-model="payload.lastName" class="form-control" id="Surname"  placeholder="Surname" required>
                    </div>
                    <div class="mb-3">
                      <label for="Email" class="col-form-label">Email:</label>
-                     <input type="email"  v-model="data.emailAdd" class="form-control" id="Email"  placeholder="Email" required>
+                     <input type="email"  v-model="payload.emailAdd" class="form-control" id="Email"  placeholder="Email" required>
                    </div>
                    <div class="mb-3">
                      <label for="gender" class="col-form-label">Gender:</label>
-                     <input type="text"  v-model="data.Gender" class="form-control" id="gender"  placeholder="Gender" required>
+                     <input type="text"  v-model="payload.gender" class="form-control" id="gender"  placeholder="Gender" required>
                    </div>
                    <div class="mb-3">
                      <label for="age" class="col-form-label">Age:</label>
-                     <input type="text"  v-model="data.userAge" class="form-control" id="age"  placeholder="Age" required>
+                     <input type="text"  v-model="payload.userDOB" class="form-control" id="age"  placeholder="Age" required>
                    </div>
                    <div class="mb-3">
                      <label for="Role" class="col-form-label">Role:</label>
-                     <input type="text"  v-model="data.userRole" class="form-control" id="Role"  placeholder="Role" required>
+                     <input type="text"  v-model="payload.Role" class="form-control" id="Role"  placeholder="Role" required>
                    </div>
                    <div class="mb-3">
                      <label for="password" class="col-form-label">Password:</label>
-                     <input type="password"  v-model="data.userPass" class="form-control" id="password"  placeholder="Password" required>
+                     <input type="password"  v-model="payload.userPass" class="form-control" id="password"  placeholder="Password" required>
                    </div>
                    <div class="mb-3">
                      <label for="image" class="col-form-label">Your image:</label>
-                     <input type="text"  v-model="data.userProfile" class="form-control" id="image"  placeholder="Image url" required>
+                     <input type="text"  v-model="payload.profileUrl" class="form-control" id="image"  placeholder="Image url" required>
                    </div>
                  </form>
                </div>
                <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                 <button class="btn btn-success mt-3"  type="submit" @click="registerUser" data-bs-dismiss="modal"> Add user </button>
+                 <button class="btn btn-success mt-3"  type="submit" @click="addUser" data-bs-dismiss="modal"> Add user </button>
                </div>
              </div>
            </div>
@@ -60,22 +60,22 @@
        export default {  
          data(){
            return{
-             data:{
+             payload:{
                firstName:"",
                lastName:"",
-               userAge:null,
-               Gender:"",
-               userRole:"",
+               userDOB:null,
+               gender:"",
+               Role:"",
                emailAdd:"",
                userPass:"",
-               userProfile:""
+               profileUrl:""
              }
            }
          },
          
          methods: {
-           registerUser(){
-             this.$store.dispatch("addUser",this.data)
+           addUser(){
+             this.$store.dispatch("addUser",this.payload)
            } 
          },
        };

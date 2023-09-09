@@ -27,7 +27,7 @@
                      <h3 class="mt-2">{{product.prodName}}</h3>
                      <p>Price: R {{product.price}}</p>
                     <router-link class="btn btn-primary mx-2" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
-                    <router-link class="btn" @click="addItem(product)">Add to Cart</router-link>
+                    <!-- <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">Add to Cart</router-link> -->
                 </div>
              </div>
          </div>

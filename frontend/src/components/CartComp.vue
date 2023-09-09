@@ -11,11 +11,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in items" :key="item.prodID">
+          <tr v-for="(item , index) in items" :key="item.prodID">
             <td>{{ item.prodName }}</td>
             <td>{{ item.price }}</td>
             <td>
-              <input type="number" v-model="item.quantity" min="1" @input="updateTotal()" />
+              <input type="number" v-model="item.quantity" min="1" @input="updateTotal(index)" />
             </td>
             <td>{{ item.quantity * item.price }}</td>
             <td>
@@ -23,7 +23,7 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table>]
       <div class="cart-summary">
         <p>Total: {{ cartTotal }}</p>
       </div>
@@ -32,31 +32,34 @@
   
   <script>
   export default {
-    data() {
-      return {
-        cartItems: [
-          { name: "Product 1", price: 10, quantity: 2 },
-          { name: "Product 2", price: 15, quantity: 1 },
-          // Add more items as needed
-        ],
-      };
-    },
-    computed: {
-      cartTotal() {
-        return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-      },
-    },
-    methods: {
-      removeItem(index) {
-        this.cartItems.splice(index, 1);
-        this.updateTotal();
-      },
-      updateTotal() {
-        // Recalculate cart total when quantity changes
-        // You can also add any other logic here, e.g., updating a server-side cart
-      },
-    },
-  };
+   
+//     computed: {
+//         items() {
+//             return this.$store.state.items;
+//             },
+//         // userData() {
+//         // return this.$store.state.userData; // Assuming you have a state named userData
+//   },
+//     },
+//     mounted() {
+//         this.$store.dispatch("addItem");
+//     },
+//     methods: {
+
+//         addItem(prodID) {
+//       // Ensure the user is logged in
+//       if (this.userData && this.userData.userID) {
+//         // Call the addToCart action with userID and prodID
+//         this.$store.dispatch('addItem', {
+//           userID: this.userData.userID,
+//           prodID,
+//         });
+//       } else {
+//         // Handle the case where the user is not logged in, prompt for login, etc.
+//       }
+//     },
+//   }
+}
   </script>
   
   <style scoped>

@@ -18,8 +18,7 @@ export default createStore({
     msg:null, 
     err: null,
     token: null,
-    LogStatus:null,
-    RegStatus:null
+    items: [],
 
    
   },
@@ -46,11 +45,8 @@ export default createStore({
     setToken: (state, token) =>{
       state.token = token;
     },
-    setRegStatus: (state, RegStatus) =>{
-      state.RegStatus = RegStatus;
-    },
-    setLogStatus: (state, LogStatus) =>{
-      state.LogStatus = LogStatus;
+    setItems: (state, item) =>{
+      state.items.push(item);
     }
    
   },
@@ -98,7 +94,22 @@ export default createStore({
           context.commit("setMessage","An error occured")
         }
       },
-   
+      async updateProduct(context,payload){
+        try {
+          let {data} =await axios.patch(`${cUrl}product/${payload.prodID}`,payload.data)
+          if(data.msg){
+            context.dispatch("getProducts")
+            swal({
+              title:"Update",
+              text:data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
       async deleteProduct(context,id){
         try {
           let {data}= await axios.delete(`${cUrl}product/${id}`)
@@ -106,6 +117,85 @@ export default createStore({
             context.dispatch("getProducts")
             Swal({
               title:"Product removal",
+              text: data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+          
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
+      async getUsers(context) { 
+        try{  
+          const {data} = await  axios.get(`${cUrl}users`)
+          if (data.results) { 
+            context.commit("setUsers", data.results)
+          }else{  
+            sweetAlert({  
+              title:"Error",  
+              text:data.msg,  
+              icon:"error", 
+              timer:2000  
+            })  
+          }   
+  
+        }catch(e){  
+          context.commit("setMessage", "An error occured")
+          console.log(e); 
+        } 
+      },  
+      async getUser(context, id ) {
+        try{  
+          const {data} = await  axios.get(`${cUrl}user/${id}` )
+          context.commit("setUser", data.results[0])
+        }catch(e){  
+          context.commit("setMessage", "An error occured")
+          console.log(e); 
+        } 
+      }, 
+      async addUser(context,payload){
+        try {
+          let {data} =await axios.post(`${cUrl}user/register`,payload)
+          const {msg} = await data
+          if(msg){
+            context.dispatch("getUsers")
+            swal({
+              title:"User Registration",
+              text:data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+          
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
+      async updateUser(context,payload){
+        try {
+          let {data} =await axios.patch(`${cUrl}user/${payload.userID}`,payload.data)
+          if(data.msg){
+            context.dispatch("getUsers")
+            swal({
+              title:"Update",
+              text:data.msg,
+              icon:"success",
+              timer:2000
+            })
+          }
+        } catch (e) {
+          context.commit("setMessage","An error occured")
+        }
+      },
+      async deleteUser(context,id){
+        try {
+          let {data}= await axios.delete(`${cUrl}user/${id}`)
+          if (data.msg) {
+            context.dispatch("getUsers")
+            swal({
+              title:"User removal",
               text: data.msg,
               icon:"success",
               timer:2000
@@ -182,38 +272,26 @@ export default createStore({
           });
         }
       },
-      async addItem(context, payload){
+      async addItem(context, {userID, prodID}){
         try{
 
-          const existingProduct = state.items.find((item) => item.productID === product.productID);
+          const payload = {
+            userID,
+            prodID,
+          };
 
-          if (existingProduct) {
-            existingProduct.quantity++;
-          } else {
-            const response = await axios.post(`${cUrl}user/:id/cart`, payload); 
-    
-            if (response.ok) {
-              context.commit("addItem", product);
-            } else {
-              console.error('Error adding to cart:', response.statusText);
-            }
+          const response = await axios.post(`${cUrl}user/${userID}/cart`, payload);
+          if (response.status === 200) {
+            context.commit('addItems', response.data); // Assuming the response contains the added product
+          } 
+          else{
+            
           }
 
-
-
-
-        } catch{
-
+        } catch (error){
+          console.error(error);
         }
-      }
-
-
-
-
-
-
-
-
+      },
 
 
 

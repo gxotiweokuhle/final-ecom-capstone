@@ -28,7 +28,7 @@
                 </div>
                 <div class="price">
                   <p class="fw-bold">Price: R {{ product.price }}</p><br>
-                  <button class="mb-3 btn fw-bold">Add to Cart</button>
+                  <button class="mb-3 btn fw-bold" @click="addItem">Add to Cart</button>
                 </div>
               </div>
             </div>

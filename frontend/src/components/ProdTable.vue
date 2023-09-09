@@ -128,12 +128,13 @@
       },
       data(){
               return{
+                payload:{},
                 outputData:[],
+                prodID:null,
                 data:{
-                  prodID:"",
                   prodName:"",
                   quantity:null,
-                  price:null,
+                  price:"",
                   category:"",
                   details:"",
                   artist:"",
@@ -141,24 +142,26 @@
                 }
               }
         },
-        // created(){
-        //   console.log(this.products);
-        //                   this.products.forEach((product) => {
-        //           if (product.prodID == this.data.prodID) {
-        //           this.data.prodName = product.prodName;
-        //           this.data.quantity = product.quantity;
-        //           this.data.price = product.price;
-        //           this.data.category = product.category;
-        //           this.data.details = product.details;
-        //           this.data.artist = product.artist;
-        //           this.data.imageUrl = product.imageUrl;
-        //           }
-        //       });
-        // },
+    
       computed: {
       products() {
         return this.$store.state.products
+      },
+      updateData(){
+        return this.products.find(item => item.prodID == this.prodID) || {}
       }
+      },
+      watch:{
+        prodID(){
+          this.data.prodName = this.updateData.prodName,
+          this.data.quantity = this.updateData.quantity,
+          this.data.price = this.updateData.price,
+          this.data.category = this.updateData.category,
+          this.data.details = this.updateData.details,
+          this.data.artist = this.updateData.artist,
+          this.data.imageUrl = this.updateData.imageUrl
+          
+        }
       },
       mounted() {
       this.$store.dispatch("getProducts")
@@ -170,10 +173,12 @@
             
           },
         setId(x){
-            this.data.prodID =x
+            this.prodID =x
           },
           updateproduct(){
-            this.$store.dispatch("updateProduct",this.data)
+            this.payload.prodID = this.prodID
+            this.payload.data = this.data
+            this.$store.dispatch("updateProduct",this.payload)
             console.log(this.data.prodID)
           },
           deleteProduct(x){
