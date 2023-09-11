@@ -12,13 +12,8 @@ import NavBar from './components/NavBar.vue';
 export default{
   components:{
     NavBar
-  },
-  created() {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      this.$store.commit("setUserData", JSON.parse(userData));
-    }
-},
+  }
+ 
 }
 </script>
 

@@ -5,16 +5,16 @@
                 <p class="title">Login</p>
                 <form class="form" @submit.prevent="userLogin">
                     <div class="input-group">
-                        <label for="email">Email</label>
+                        <label for="email" class="fs-5 text-white">Email:</label>
 			            <input type="email" name="email" id="email" placeholder="" v-model="emailAdd" required>
                     </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
+                    <div class="input-group mt-2">
+                        <label for="password" class="fs-5 text-white">Password:</label>
 			            <input type="password" name="password" id="password" placeholder=""  v-model="userPass" required>
                        
                     </div>
-                    <button class="sign mt-4" type="submit">Log in</button>
-                    <p class="signin mt-4">Don't have an account ? <a href="/user/register">Register</a> </p>
+                    <button class="submit mt-4 fs-4" type="submit">Log in</button>
+                    <p class="signin mt-4">Don't have an account ? <a href="/user/register" class="fs-4">Register</a> </p>
                 </form>
             </div>
     </div>
@@ -82,6 +82,9 @@ import Swal from "sweetalert2";
   color: rgba(243, 244, 246, 1);
 
 }
+a{
+  text-decoration: none;
+}
 .container{
     display: flex;
   justify-content: center;
@@ -95,10 +98,17 @@ import Swal from "sweetalert2";
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 700;
+  letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    color:rgb(200,160,4);
 }
 
 .form {
   margin-top: 1.5rem;
+ 
 }
 
 .input-group {
@@ -128,16 +138,60 @@ import Swal from "sweetalert2";
 }
 
 
-.sign {
+/* .sign {
   display: block;
   width: 100%;
-  /* background-color: rgba(200, 160, 4,); */
   padding: 0.75rem;
   text-align: center;
   color: rgba(17, 24, 39, 1);
   border: none;
   border-radius: 0.375rem;
   font-weight: 600;
-}
-
+} */
+.submit {
+    border: none;
+    outline: none;
+    background: rgb(200,160,4);
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+  }
+  
+  .submit:hover {
+    background-color: black;
+  }
+.title::before,.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+    background: rgb(200,160,4);
+  }
+  
+  .title::before {
+    width: 18px;
+    height: 18px;
+    background-color: black;
+  }
+  
+  .title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+  }
+  @keyframes pulse {
+    from {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+  
+    to {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
 </style>

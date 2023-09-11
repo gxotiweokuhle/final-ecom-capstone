@@ -148,7 +148,7 @@ export default createStore({
       },  
       async getUser(context, id ) {
         try{  
-          const {data} = await  axios.get(`${cUrl}user/${id}` )
+          const {data} = await  axios.get(`${cUrl}user/` + id )
           context.commit("setUser", data.results[0])
         }catch(e){  
           context.commit("setMessage", "An error occured")
@@ -272,26 +272,39 @@ export default createStore({
           });
         }
       },
-      async addItem(context, {userID, prodID}){
-        try{
+      // async addItem(context, {userID, prodID}){
+      //   try{
 
-          const payload = {
-            userID,
-            prodID,
-          };
+      //     const payload = {
+      //       userID,
+      //       prodID,
+      //     };
 
-          const response = await axios.post(`${cUrl}user/${userID}/cart`, payload);
-          if (response.status === 200) {
-            context.commit('addItems', response.data); // Assuming the response contains the added product
-          } 
-          else{
+      //     const response = await axios.post(`${cUrl}user/${userID}/cart`, payload);
+      //     if (response.status === 200) {
+      //       context.commit('addItems', response.data); // Assuming the response contains the added product
+      //     } 
+      //     else{
             
-          }
+      //     }
 
-        } catch (error){
-          console.error(error);
-        }
-      },
+      //   } catch (error){
+      //     console.error(error);
+      //   }
+      // },
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
 
 

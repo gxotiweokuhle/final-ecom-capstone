@@ -1,9 +1,10 @@
 <template>
+  <section class="reg">
 
-    <div class="container mt-5">
+    <div class="container mt-5 p-2">
         <form class="form bg-black" @submit.prevent="registerUser">
                     <p class="title">Register </p>
-                    <p class="message">Signup now and get full access to our app. </p>
+                    <p class="message text-white fs-4">Signup now and get full access to our app. </p>
                     <div class="flex">
                         <label>
                             <input required="" placeholder="" type="text" class="input" v-model="firstName">
@@ -41,18 +42,22 @@
                         <input required="" placeholder="" type="text" class="input" v-model="Role">
                         <span>Role</span>
                     </label>
-                    <button class="submit">Submit</button>
-                    <p class="signin">Already have an acount ? <a href="/user/login">Signin</a> </p>
+                    <button class="submit fs-4">Submit</button>
+                    <p class="signin text-white fs-5">Already have an account ? <a href="/user/login" class="fs-4">Signin</a> </p>
 </form>
 
     </div>
+    <div class="mt-5">
+      <Footer/>
+    </div>
+  </section>
 </template>
 <script>
 import router from '../router/index'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer.vue';
 export default{
-
-          data() {
+     data() {
         return {
             firstName: "",
             lastName: "",
@@ -104,6 +109,9 @@ export default{
             }
             
         },
+        components:{
+    Footer
+  }
    
 }
 };
@@ -119,16 +127,24 @@ export default{
   border-radius: 20px;
   position: relative;
 }
+a{
+  text-decoration: none;
+  
+}
+.reg{
+  background: rgb(200, 160, 4);
+}
 .container{
     display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
+
   font-family: 'REM', sans-serif; 
 }
 .title {
   font-size: 28px;
-  color: royalblue;
+  color: rgb(200,160,4);
   font-weight: 600;
   letter-spacing: -1px;
   position: relative;
@@ -144,13 +160,13 @@ export default{
   width: 16px;
   border-radius: 50%;
   left: 0px;
-  background-color: royalblue;
+  background: rgb(200,160,4);
 }
 
 .title::before {
   width: 18px;
   height: 18px;
-  background-color: royalblue;
+  background-color: black;
 }
 
 .title::after {
@@ -216,13 +232,13 @@ export default{
 }
 
 .form label .input:valid + span {
-  color: green;
+  color:black;
 }
 
 .submit {
   border: none;
   outline: none;
-  background-color: royalblue;
+  background: rgb(200,160,4);
   padding: 10px;
   border-radius: 10px;
   color: #fff;
@@ -231,7 +247,7 @@ export default{
 }
 
 .submit:hover {
-  background-color: rgb(56, 90, 194);
+  background-color:black;
 }
 
 @keyframes pulse {
@@ -245,4 +261,6 @@ export default{
     opacity: 0;
   }
 }
+
+
 </style>

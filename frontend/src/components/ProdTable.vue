@@ -187,3 +187,10 @@
         },  
     };
   </script>
+  <style scoped>
+    .body{
+      
+    font-family: 'REM', sans-serif;
+
+    }
+  </style>

@@ -19,7 +19,7 @@
                   <th>Gender</th>
                   <th>Age</th>
                   <th>Email</th>
-                  <th>Password</th>
+                  <!-- <th>Password</th> -->
                   <th>Role</th>
                   <th>Image</th>
                   <th>Profile</th>
@@ -34,7 +34,7 @@
                   <td>{{ user.gender }}</td>
                   <td>{{ user.userDOB }}</td>
                   <td>{{ user.emailAdd}}</td>
-                  <td>{{ user.userPass}}</td>
+                  <!-- <td>{{ user.userPass}}</td> -->
                   <td>{{ user.Role}}</td>
                   <td><img class="tableImg" :src="user.profileUrl" alt="" /></td>
                   <td>
@@ -54,11 +54,11 @@
                       <td>{{ user.gender }}</td>
                       <td>{{ user.userDOB }}</td>
                       <td>{{ user.emailAdd}}</td>
-                      <td>{{ user.userPass}}</td>
+                      <!-- <td>{{ user.userPass}}</td> -->
                       <td>{{ user.Role}}</td>    
                       <td><img class="tableImg" :src="user.profileUrl" alt="" /></td>
-                      <td><a href="/user/:id">View Profile</a></td>
-                      <!-- <router-link class="btn " :to="{ name:'user', params: {id: user.userID}}">View More</router-link> -->
+                     
+                      <router-link class="btn " :to="{ name:'user', params: {id: user.userID}}">View Profile</router-link>
                       <td>
                         <button type="button" class="btn " data-bs-toggle="modal" @click="setId(user.userID)" data-bs-target="#Update" data-bs-whatever="@mdo">Update</button>
                         <button
@@ -193,9 +193,15 @@ import AddUser from '@/components/AddUser.vue'
         },
         updateUser(){
           // this.$store.dispatch("updateUser",this.data)
-          this.payload.userID = this.userID
-            this.payload.data = this.data
-            this.$store.dispatch("updateUser",this.payload)
+          this.payload.userID = this.userID;
+            this.payload.data = this.data;
+            console.log("Payload to update:", this.payload);
+            this.$store.dispatch("updateUser",this.payload).then(response =>{
+              console.log("Update response:", response);
+            })
+            .catch(error => {
+              console.error("Update error:", error);
+            });
             console.log(this.data.userID)
         },
         deleteUser(x){
@@ -205,6 +211,9 @@ import AddUser from '@/components/AddUser.vue'
     }
 </script>
 <style scoped>
+.container{
+  font-family: 'REM', sans-serif;
+}
    button{
     margin: 0.5rem;
     padding: 0.5rem;
@@ -220,13 +229,16 @@ button:hover{
   .tableImg {
       width: 120px;
       height: auto;
+      
   }
-  table{
+  .table{
     width: 90%;
+ 
   }
   .userTable{
   overflow-x: scroll;
   padding: 2rem;
   max-width: 100%;
 }
+
 </style>

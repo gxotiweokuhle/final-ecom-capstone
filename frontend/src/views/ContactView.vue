@@ -1,5 +1,5 @@
 <template>
-  <section class="info">
+  <section class="info ">
         <div>
             <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d105751.33827428608!2d18.346393321858468!3d-34.076452401007636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x1dcc41e2b6cade59%3A0x7d001e7f80e9aeb1!2s4%20Steenberg%20Rd%2C%20Tokai%2C%20Cape%20Town%2C%207945!3m2!1d-34.076479899999995!2d18.4287945!5e0!3m2!1sen!2sza!4v1693571822757!5m2!1sen!2sza" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
@@ -14,7 +14,7 @@
                         <p class="p-2 text-black fw-semibold fs-4">Vist our Gallery in partnership with Norval Foundation
                             as seen from the Map above. <br>
                             We host our Art auctions, workshops and other network events at the pinned location. <br>
-                            If you want to join us in upcoming events or to venture into Business with us 
+                            If you want to join us in upcoming events kindly visit or to venture into Business with us 
                             leave your details below and you will be contacted.
                         </p>
                     </div>

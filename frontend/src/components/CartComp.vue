@@ -11,21 +11,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item , index) in items" :key="item.prodID">
+          <tr v-for="item in items" :key="item.cartID">
             <td>{{ item.prodName }}</td>
             <td>{{ item.price }}</td>
             <td>
-              <input type="number" v-model="item.quantity" min="1" @input="updateTotal(index)" />
+              <input type="number" v-model="item.quantity" min="1" @input="updateTotal(item)" />
             </td>
-            <td>{{ item.quantity * item.price }}</td>
+            <td>R {{ item.quantity * item.price }}</td>
+            <td></td>
             <td>
-              <button @click="removeItem(index)">Remove</button>
+              <button @click="removeItem(item.cartID)">Remove</button>
             </td>
           </tr>
         </tbody>
-      </table>]
+      </table>
       <div class="cart-summary">
         <p>Total: {{ cartTotal }}</p>
+      </div>
+      <div>
+        <button><a href="/orders">Proceed to Checkout</a></button>
       </div>
     </div>
   </template>
@@ -33,32 +37,32 @@
   <script>
   export default {
    
-//     computed: {
-//         items() {
-//             return this.$store.state.items;
-//             },
-//         // userData() {
-//         // return this.$store.state.userData; // Assuming you have a state named userData
-//   },
-//     },
-//     mounted() {
-//         this.$store.dispatch("addItem");
-//     },
-//     methods: {
+    computed: {
+        items() {
+            return this.$store.state.items;
+            },
+        // userData() {
+        // return this.$store.state.userData; // Assuming you have a state named userData
+          
+    },
+    mounted() {
+        this.$store.dispatch("addItem");
+    },
+    methods: {
 
-//         addItem(prodID) {
-//       // Ensure the user is logged in
-//       if (this.userData && this.userData.userID) {
-//         // Call the addToCart action with userID and prodID
-//         this.$store.dispatch('addItem', {
-//           userID: this.userData.userID,
-//           prodID,
-//         });
-//       } else {
-//         // Handle the case where the user is not logged in, prompt for login, etc.
-//       }
-//     },
-//   }
+    //     addItem(prodID) {
+    //   // Ensure the user is logged in
+    //   if (this.userData && this.userData.userID) {
+    //     // Call the addToCart action with userID and prodID
+    //     this.$store.dispatch('addItem', {
+    //       userID: this.userData.userID,
+    //       prodID,
+    //     });
+    //   } else {
+    //     // Handle the case where the user is not logged in, prompt for login, etc.
+    //   }
+    // },
+  }
 }
   </script>
   
