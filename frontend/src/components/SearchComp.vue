@@ -1,7 +1,7 @@
 <template>
     <div class="InputContainer">
  
-         <input placeholder="Search.." id="input" v-model="sData" class="input" name="text" type="text">
+         <input placeholder="Search.." id="input" v-model="searchInput" class="input" name="text" type="text">
    
      </div>
  </template>
@@ -9,26 +9,41 @@
    export default{
      data(){
            return{
-              sData:null
+              // sData:null
+              searchInput: "",
            }
        },
        computed: {
            products() {
                return this.$store.state.products;
            },
-           filter(){
-               if(this.sData){
-                  return this.products.filter(item => item.prodName.includes(this.sData))
-               }
-           }
-       
-       },
-       watch:{
-         filter(data){
-           this.$emit("apply-search", data)
-         }
+          //  filter(){
+          //      if(this.sData){
+          //         return this.products.filter(item => item.prodName.includes(this.sData))
+          //      }
+          //  }
+                filteredProducts() {
+                  const searchQuery = this.searchInput.toLowerCase();
+                  return this.products.filter(
+                    (product) =>
+                      product.prodName.toLowerCase().includes(searchQuery) ||
+                      product.category.toLowerCase().includes(searchQuery)
+                  );
+            },
+       filterProducts() {
+      const searchQuery = this.searchInput.toLowerCase();
+      this.products = this.sortedProducts.filter(
+        (product) =>
+          product.prodName.toLowerCase().includes(searchQuery) ||
+          product.Category.toLowerCase().includes(searchQuery)
+      );
+    },
+      //  watch:{
+      //    filter(data){
+      //      this.$emit("apply-search", data)
+      //    }
      
-       },
+      //  },
        methods:{
            
        },
@@ -36,6 +51,7 @@
            this.$store.dispatch("getProducts");
        }
    }
+  }
  
  </script>
  <style scoped>

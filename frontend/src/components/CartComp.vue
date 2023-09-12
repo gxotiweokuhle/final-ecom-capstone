@@ -20,7 +20,7 @@
             <td>R {{ item.quantity * item.price }}</td>
             <td></td>
             <td>
-              <button @click="removeItem(item.cartID)">Remove</button>
+              <button  v-if="item.cartID"    @click="removeItem(item.cartID)">Remove</button>
             </td>
           </tr>
         </tbody>
@@ -36,7 +36,7 @@
   
   <script>
   export default {
-   
+    props:["cart"],
     computed: {
         items() {
             return this.$store.state.items;
@@ -62,6 +62,17 @@
     //     // Handle the case where the user is not logged in, prompt for login, etc.
     //   }
     // },
+      removeItem(cartID){
+        this.$store.dispatch("removeItem", cartID);
+        console.log(cartID);
+      }
+      // updateQuantity(item){
+      //   this.$store.dispatch('updateQuantity', {
+      //     cartID: item.cartID,
+      //     prodID: item.prodID,
+      //     quantity: item.quantity,
+      //   })
+      // }
   }
 }
   </script>

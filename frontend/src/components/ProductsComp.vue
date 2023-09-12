@@ -2,8 +2,8 @@
     <div class="container allprod">
      <div class="row mb-4">
              <div class="col"> <FilterComp @apply-filter="newdataDisplay"></FilterComp></div>
-             <!-- <div class="col"><SortComp @apply-sort="newdataDisplay"></SortComp></div> 
-             <SearchComp @apply-search="newdataDisplay"></SearchComp> -->
+             <!-- <div class="col"><SortComp @apply-sort="newdataDisplay"></SortComp></div>  -->
+            <SearchComp @apply-search="newdataDisplay"></SearchComp> 
 
          </div>
          
@@ -41,11 +41,11 @@
  <script>
      import SpinnerComp from '@/components/SpinnerComp.vue';
      import FilterComp from '@/components/FilterComp.vue';
-    //  import SearchComp from './SearchComp.vue';
+     import SearchComp from './SearchComp.vue';
     //  import SortComp from '../components/SortComp.vue';
  
      export default{
-     components: { SpinnerComp, FilterComp}, 
+     components: { SpinnerComp, FilterComp, SearchComp}, 
      data(){
          return{
              outputData:[],

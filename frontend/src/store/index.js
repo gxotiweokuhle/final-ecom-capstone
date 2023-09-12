@@ -47,7 +47,8 @@ export default createStore({
     },
     setItems: (state, item) =>{
       state.items.push(item);
-    }
+    },
+    
    
   },
   actions: {
@@ -272,28 +273,48 @@ export default createStore({
           });
         }
       },
-      // async addItem(context, {userID, prodID}){
-      //   try{
 
-      //     const payload = {
-      //       userID,
-      //       prodID,
-      //     };
+      async getItems(context) {
+        try{
+          const {data} = await axios.get(`${cUrl}cart`)
+          if (data.results) {
+            context.commit("setItems", data.results)
+          }else{
+            sweetAlert({
+              title:"Error",
+              text:data.msg,
+              icon:"error",
+              timer:2000
+            })
+          }  
+        }
+      catch(e){
+        context.commit("setMessage", "An error occured")
+        console.log(e);
+      }
+      },
 
-      //     const response = await axios.post(`${cUrl}user/${userID}/cart`, payload);
-      //     if (response.status === 200) {
-      //       context.commit('addItems', response.data); // Assuming the response contains the added product
-      //     } 
-      //     else{
+
+      async addItem(context, {userID, prodID}){
+        try{
+
+          const payload = {
+            userID,
+            prodID,
+          };
+
+          const response = await axios.post(`${cUrl}user/${userID}/cart`, payload);
+          if (response.status === 200) {
+            context.commit('addItems', response.data); // Assuming the response contains the added product
+          } 
+          else{
             
-      //     }
+          }
 
-      //   } catch (error){
-      //     console.error(error);
-      //   }
-      // },
-
-
+        } catch (error){
+          console.error(error);
+        }
+      },
 
 
 
@@ -304,7 +325,9 @@ export default createStore({
 
 
 
-      
+
+
+
 
 
 

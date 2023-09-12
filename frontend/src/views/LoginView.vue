@@ -60,15 +60,6 @@ import Swal from "sweetalert2";
 },
 
 
-
-
-
-
-
-
-
-
-
     }
   }
 </script>
