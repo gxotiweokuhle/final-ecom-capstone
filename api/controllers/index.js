@@ -48,6 +48,7 @@ routes.delete('/product/:id',(req,res)=>{
 
 
 //cart routes
+// cart route that works now due to issues 
 
 routes.get('/cart/:userID',(req,res)=>{
     const userID = req.params.userID;
