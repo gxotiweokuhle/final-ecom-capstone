@@ -183,24 +183,24 @@ import AddUser from '@/components/AddUser.vue'
           this.$store.dispatch("getUsers")
       },
       methods:{
-userID(){
-  const userData = localStorage.getItem('userData');
-if (userData) {
-  // Parse the JSON data from local storage
-  const userDataObject = JSON.parse(userData);
+// userID(){
+//   const userData = localStorage.getItem('userData');
+// if (userData) {
+//   // Parse the JSON data from local storage
+//   const userDataObject = JSON.parse(userData);
   
-  // Access the userID from userDataObject
-  const userID = userDataObject.result.userID;
-console.log(userID);
-  // Now, you can use the userID as needed in your component
-  // For example, you can set it to a data property
-  this.userID = userID;
-} else {
-  // Handle the case where userData is not found in local storage
-  console.error('User data not found in local storage');
-}
+//   // Access the userID from userDataObject
+//   const userID = userDataObject.result.userID;
+// console.log(userID);
+//   // Now, you can use the userID as needed in your component
+//   // For example, you can set it to a data property
+//   this.userID = userID;
+// } else {
+//   // Handle the case where userData is not found in local storage
+//   console.error('User data not found in local storage');
+// }
 
-},
+// },
         newdataDisplay(data){
              this.outputData=data;
             

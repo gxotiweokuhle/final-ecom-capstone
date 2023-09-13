@@ -24,7 +24,7 @@
           <a class="nav-link active text-white " href="/products">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active text-white " href="/user/:id/cart">Cart</a>
+          <a class="nav-link active text-white " href="/items/:userID">Cart</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="/about">About</a>

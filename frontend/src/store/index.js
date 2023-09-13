@@ -374,7 +374,7 @@ export default createStore({
             // Use userID within this function
             console.log(userID);
       
-            const response = await axios.post(`${cUrl}user/${userID}/cart`, {
+            const response = await axios.post(`${cUrl}items/${userID}`, {
               prodID,
               quantity,
             }, {
