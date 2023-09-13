@@ -42,7 +42,7 @@ class Cart{
 
         const query =`
         INSERT INTO Cart(userID,prodID, quantity)
-        VALUES (?, ?);
+        VALUES (?, ?, ?);
         `;
         db.query(query,[userID,prodID, quantity],(err)=>{
             if(err){
