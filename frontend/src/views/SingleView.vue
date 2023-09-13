@@ -28,7 +28,7 @@
                 </div>
                 <div class="price">
                   <p class="fw-bold">Price: R {{ product.price }}</p><br>
-                  <button class="mb-3 btn fw-bold" @click="addItem">Add to Cart</button>
+                  <button class="mb-3 btn fw-bold" @click="addItem(product.prodID, 1)">Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -54,6 +54,11 @@ export default {
     console.log(this.id);
     this.$store.dispatch("getProduct", this.$route.params.id);
   },
+  methods:{
+    addItem(prodID, quantity){
+      this.$store.dispatch("addItem", {prodID, quantity});
+    }
+  }
   
 };
 

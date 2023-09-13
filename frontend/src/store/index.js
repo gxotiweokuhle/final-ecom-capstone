@@ -48,6 +48,14 @@ export default createStore({
     setItems: (state, item) =>{
       state.items.push(item);
     },
+    setToCart: (state, {prodID, quantity}) =>{
+      const items = state.items.find(item => item.prodID === prodID);
+      if(items){
+        items.quantity = quantity;
+        localStorage.setItem('cart', JSON.stringify(state.items));
+
+      }
+    }
     
    
   },
@@ -309,47 +317,103 @@ export default createStore({
         },
 
 
-      async addItem(context, {prodID, quantity}){
+      // async addItem(context, {prodID, quantity}){
         
-        try{
-            //access userid frpm ls
-        const userDataJSON = localStorage.getItem('userData');
-        const userData = JSON.parse(userDataJSON);
+      //   try{
+      //       //access userid from ls
+      //   // const userDataJSON = localStorage.getItem('userData');
+      //   // const userData = JSON.parse(userDataJSON);
 
-        const userID = userData.result.userID;
-        console.log(userID);
+      //   // const userID = userData.result.userID;
+      //   // console.log(userID);
+
+      //   const userData = localStorage.getItem('userData');
+      //       if (userData) {
+      //         const userDataObject = JSON.parse(userData);
+      //         const userID = userDataObject.result.userID;
+      //         console.log(userID);
+      //         this.userID = userID;
+      //       } else {
+      //         console.error('User data not found in local storage');
+      //       }
         
-          const response = await  axios.post(`${cUrl}user/${userID}/cart`, {
-              prodID,
-              quantity,
-          }, {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+      //     const response = await  axios.post(`${cUrl}user/${userID}/cart`, {
+      //         prodID,
+      //         quantity,
+      //     }, {
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //     });
 
 
 
-          if (!response.ok) {
-            throw Error(`Failed to add item to cart. Status: ${response.status}`)
-          } 
+      //     if (!response.ok) {
+      //       throw Error(`Failed to add item to cart. Status: ${response.status}`)
+      //     } 
 
-          const data = await response.json();
-          context.commit('addToCart', data.result);
+      //     const data = await response.json();
+      //     context.commit('setToCart', data.result);
           
 
-        } catch (error){
+      //   } catch (error){
+      //     console.error(error);
+      //   }
+      // },
+
+
+
+      async addItem(context, { prodID, quantity }) {
+        try {
+          const userData = localStorage.getItem('userData');
+      
+          if (userData) {
+            const userDataObject = JSON.parse(userData);
+            const userID = userDataObject.result.userID;
+      
+            // Use userID within this function
+            console.log(userID);
+      
+            const response = await axios.post(`${cUrl}user/${userID}/cart`, {
+              prodID,
+              quantity,
+            }, {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+      
+            if (!response.ok) {
+              throw Error(`Failed to add item to cart. Status: ${response.status}`);
+            }
+      
+            const data = await response.json();
+            context.commit('setToCart', data.result);
+          } else {
+            console.error('User data not found in local storage');
+          }
+        } catch (error) {
           console.error(error);
         }
       },
-
+      
 
       async UpdateQuantity(context, {cartID, quantity}){
         try{
-          const response = await axios.put(`${cUrl}`)
-        }
-        catch{
+          const response = await axios.put(`${cUrl}user/${userID}/cart`, {quantity}, {
+            headers:{
+              "Content-Type": "application/json",
+            }
+          })
 
+          if (!response.ok) {
+            throw Error("Failed to update item quantity in cart");
+          }
+
+          context.commit("updateQuantity", { cartID, quantity });
+        }
+        catch(error){
+          console.error(error);
         }
       },
 
