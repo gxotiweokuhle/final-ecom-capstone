@@ -45,15 +45,21 @@ export default createStore({
     setToken: (state, token) =>{
       state.token = token;
     },
-    setItems: (state, item) =>{
-      state.items.push(item);
+    setItems: (state, items) =>{
+      // state.items.push(item);
+      state.items = items;
+      localStorage.setItem("cart", JSON.stringify(state.items))
     },
+
     setToCart: (state, {prodID, quantity}) =>{
-      const items = state.items.find(item => item.prodID === prodID);
-      if(items){
-        items.quantity = quantity;
+      const itemIndex = state.items.findIndex(item => item.prodID === prodID);
+      if(itemIndex !== -1){
+         // Item with the specified prodID exists in the cart
+         state.items[itemIndex].quantity = quantity;
         localStorage.setItem('cart', JSON.stringify(state.items));
 
+      } else{
+        console.error(`Item with prodID ${prodID} not found in the cart.`);
       }
     }
     
@@ -288,9 +294,8 @@ export default createStore({
         const userData = JSON.parse(userDataJSON);
 
         const userID = userData.result.userID;
-        console.log(userID);
+        console.log("User ID:", userID);
         if(userID){
-
           try{
             const response = await axios.get(`${cUrl}cart/${userID}`);
             
@@ -298,15 +303,12 @@ export default createStore({
               // context.commit("setItems", data.results)
               throw Error("Failed to retrieve cart items")
             } 
-
             const data = await response.json();
             console.log(data);
             const items = data.results;
             context.commit("setItems", items);
             console.log(items);
-
-          }
-        catch(e){
+          } catch(e){
           context.commit("setMessage", "An error occured")
           console.log(e);
         }
@@ -383,12 +385,14 @@ export default createStore({
               },
             });
       
-            if (!response.ok) {
+            if (response.status === 200) {
+              const data = response.data; 
+              context.commit('setToCart', data.result);
+            } else {
               throw Error(`Failed to add item to cart. Status: ${response.status}`);
             }
-      
-            const data = await response.json();
-            context.commit('setToCart', data.result);
+            
+          
           } else {
             console.error('User data not found in local storage');
           }

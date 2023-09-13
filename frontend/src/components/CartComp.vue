@@ -46,10 +46,14 @@
           
     },
     mounted() {
-        this.$store.dispatch("addItem");
+        this.$store.dispatch("getItems");
     },
     methods: {
 
+      addToCart() {
+      // Call the setToCart mutation with the desired prodID and quantity
+      this.$store.commit('setToCart', { prodID: '123', quantity: 3 });
+    },
     //     addItem(prodID) {
     //   // Ensure the user is logged in
     //   if (this.userData && this.userData.userID) {
