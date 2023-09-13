@@ -60,7 +60,7 @@ routes.get('/cart/:userID',(req,res)=>{
 routes.post('/user/:id/cart',bodyParser.json(),(req,res)=>{
     cart.addItem(req,res)
 })
-routes.patch('/user/:id/cart',bodyParser.json(),(req,res)=>{
+routes.put('/user/:id/cart',bodyParser.json(),(req,res)=>{
     cart.updateItem(req,res)
 })
 routes.delete('/user/:id/cart',(req,res)=>{
