@@ -72,27 +72,7 @@ class Users{
             })
         })
     }
-    // async registerUser(req,res){
-    //     const data = req.body
-    //     data.userPass = hash(data.userPass,15)
 
-    //     const payload ={
-    //         emailAdd: data.emailAdd,
-    //         userPass: data.userPass
-    //     }
-    //     const query = `
-    //     INSERT INTO Users
-    //     SET ?;
-    //     `
-    //     const token = tokenCreate(payload)
-    //     db.query(query,[data],(err)=>{
-    //         if(err) throw err
-    //         res.json({
-    //             status:res.statusCode,
-    //             msg:"You have signed up"
-    //         })
-    //     })
-    // }
     async registerUser(req,res) {
         const data = req.body;
 

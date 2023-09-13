@@ -3,69 +3,76 @@
 const bodyParser = require('body-parser')
 const db = require('../config')
 class Cart{
-    getItems(req,res){
+    getItems(req,res, userID){
         const query =`
         SELECT c.prodID, c.quantity, p.prodName, p.price, p.imageUrl
         FROM Cart c
         JOIN Products p ON c.prodID = p.prodID;
+        WHERE c.userID = ?;
         `
-        db.query(query,(err,results)=>{
-            if(err) throw err
-            res.json({
-                status:res.statusCode,
-                results
-            })
+        db.query(query,[userID],(err,results)=>{
+            if(err) {
+                res.status(500).json({ message: 'Internal Server Error' });
+            }   else {
+                res.json({ status: res.statusCode, results })
+            }
+            
         })
     }
    
-    updateItem(req,res){
+    updateItem(req,res, userID, cartID, quantity){
         const query = `
         UPDATE Cart
-        SET ?
-        WHERE cartID= ${req.params.id}
+        SET  quantity = ?
+        WHERE cartID = ? AND userID = ?;
         `
-        db.query(query,[req.body],(err,results)=>{
-            if(err) throw err
-            res.json({
-                status:res.statusCode,
-                msg:"Cart item successfully updated"
-            })
-        })
+        db.query(query,[quantity,cartID, userID],(err)=>{
+            if(err) {
+                console.error(err);
+                res.status(500).json({ message: 'Internal Server Error' });
+            } else {
+                res.json({ message: 'Cart item updated!' });
+            }
+           
+        });
     }
-    addItem(req,res){
-        const {prodID, quantity} = req.body;
+    addItem(req,res, userID, prodID, quantity){
+        console.log("cart.addItem is called. UserID:", userID, "Product ID:", prodID, "Quantity:", quantity);
+       
+
         const query =`
-        INSERT INTO Cart(prodID, quantity)
+        INSERT INTO Cart(userID,prodID, quantity)
         VALUES (?, ?);
         `;
-        db.query(query,[prodID, quantity],(err)=>{
+        db.query(query,[userID,prodID, quantity],(err)=>{
             if(err){
                 console.error(err);
                 res.status(500).json({
                     msg: "Error adding item to cart",
-                    error: err
+                    
                 });
             }
             else{
                 res.json({
-                    status:res.statusCode,
                     msg:"Cart item added successfully"
                 })
                 
             }
         })
     }
-    deleteItem(req,res){
+    deleteItem(req,res, userID, cartID){
         const query =`
         DELETE FROM Cart
-        WHERE cartID = ${req.params.id}
+        WHERE cartID = ? AND userID = ?;
         `
-        db.query(query,(err)=>{
-            if(err) throw err
-            res.json({
-                status:res.statusCode,
-                msg:"This cart item has been deleted"
-            })
+        db.query(query,[cartID, userID],(err)=>{
+            if(err) {
+                console.error(err);
+                res.status(500).json({ message: 'Internal Server Error' });
+            }
+            else {
+                res.json({ message: 'Cart item deleted successfully' });
+            }
         })
     }
 

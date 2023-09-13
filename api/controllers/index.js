@@ -42,21 +42,19 @@ routes.delete('/product/:id',(req,res)=>{
     products.deleteProduct(req,res)
 })
 
-// orders routes
-routes.get('/user/:id/cart/order',(req,res)=>{
-    orders.getOrders(req,res)
-})
+
 
 
 
 
 //cart routes
 
-// routes.get('/user/:id/cart',(req,res)=>{
-//     cart.getItems(req,res)
-// })
-routes.get('/cart',(req,res)=>{
-    cart.getItems(req,res)
+routes.get('/cart/:userID',(req,res)=>{
+    const userID = req.params.userID;
+    if(!userID){
+        return res.status(400).json({ message: 'userID is required' });
+
+    }
 })
 routes.post('/user/:id/cart',bodyParser.json(),(req,res)=>{
     cart.addItem(req,res)
