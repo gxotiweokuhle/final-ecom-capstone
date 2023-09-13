@@ -57,7 +57,7 @@ routes.get('/cart/:userID',(req,res)=>{
 
     }
 })
-routes.post('/user/:id/cart',bodyParser.json(),(req,res)=>{
+routes.post('/items/:userID',bodyParser.json(),(req,res)=>{
     cart.addItem(req,res)
 })
 routes.put('/user/:id/cart',bodyParser.json(),(req,res)=>{
