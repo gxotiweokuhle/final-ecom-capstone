@@ -275,41 +275,68 @@ export default createStore({
       },
 
       async getItems(context) {
-        try{
-          const {data} = await axios.get(`${cUrl}cart`)
-          if (data.results) {
-            context.commit("setItems", data.results)
-          }else{
-            sweetAlert({
-              title:"Error",
-              text:data.msg,
-              icon:"error",
-              timer:2000
-            })
-          }  
-        }
-      catch(e){
-        context.commit("setMessage", "An error occured")
-        console.log(e);
-      }
-      },
 
+        const userDataJSON = localStorage.getItem('userData');
+        const userData = JSON.parse(userDataJSON);
 
-      async addItem(context, {userID, prodID}){
-        try{
+        const userID = userData.result.userID;
+        console.log(userID);
+        if(userID){
 
-          const payload = {
-            userID,
-            prodID,
-          };
-
-          const response = await axios.post(`${cUrl}user/${userID}/cart`, payload);
-          if (response.status === 200) {
-            context.commit('addItems', response.data); // Assuming the response contains the added product
-          } 
-          else{
+          try{
+            const response = await axios.get(`${cUrl}cart/${userID}`);
             
+            if (!response.ok) {
+              // context.commit("setItems", data.results)
+              throw Error("Failed to retrieve cart items")
+            } 
+
+            const data = await response.json();
+            console.log(data);
+            const items = data.results;
+            context.commit("setItems", items);
+            console.log(items);
+
           }
+        catch(e){
+          context.commit("setMessage", "An error occured")
+          console.log(e);
+        }
+        } else{
+          console.error('User data or userID not found in state');
+        }
+
+        },
+
+
+      async addItem(context, {prodID, quantity}){
+        
+        try{
+            //access userid frpm ls
+        const userDataJSON = localStorage.getItem('userData');
+        const userData = JSON.parse(userDataJSON);
+
+        const userID = userData.result.userID;
+        console.log(userID);
+        
+          const response = await  axios.post(`${cUrl}user/${userID}/cart`, {
+              prodID,
+              quantity,
+          }, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+
+
+          if (!response.ok) {
+            throw Error(`Failed to add item to cart. Status: ${response.status}`)
+          } 
+
+          const data = await response.json();
+          context.commit('addToCart', data.result);
+          
 
         } catch (error){
           console.error(error);
@@ -317,7 +344,14 @@ export default createStore({
       },
 
 
+      async UpdateQuantity(context, {cartID, quantity}){
+        try{
+          const response = await axios.put(`${cUrl}`)
+        }
+        catch{
 
+        }
+      },
 
 
 
