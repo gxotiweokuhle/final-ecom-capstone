@@ -15,11 +15,12 @@
             Account
           </a>
           <ul class="dropdown-menu bg-black">
-            <li><a class="dropdown-item text-white" href="/user/register">Sign Up!</a></li>
-            <li><a class="dropdown-item text-white" href="/user/login">Login</a></li>
-            
+            <li><a class="dropdown-item text-white" v-show="!isLogged" href="/user/register">Sign Up!</a></li>
+            <li><a class="dropdown-item text-white" v-show="!isLogged" href="/user/login">Login</a></li>
+            <li><a class="dropdown-item text-white" v-show="isLogged" href="/user/:id">Profile</a></li>
           </ul>
         </li>
+
         <li class="nav-item">
           <a class="nav-link active text-white " href="/products">Products</a>
         </li>
@@ -51,7 +52,34 @@
 </template>
 <script>
 export default{
-    
+    computed:{
+      user(){
+        return this.$store.state.user || JSON.parse(localStorage.getItem("userData"))
+      },
+      sAdmin() {
+        console.log(this.user.result?.Role?.toLowerCase() == "admin");
+        return this.user.result?.Role?.toLowerCase() == "admin";
+      },
+      isUser() {
+        console.log(this.result?.Role?.toLowerCase() == "user");
+        return this.user.result?.Role?.toLowerCase() == "user";
+      },
+      isLogged(){
+        console.log(!this.user.result == " ");
+        return !this.user.result == " ";
+      }
+
+
+
+
+
+    },
+    mounted(){
+      console.log(this.user.result);
+    },
+    methods:{
+
+    }
 }
 </script>
 <style scoped>

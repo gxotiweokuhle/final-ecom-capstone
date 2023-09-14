@@ -1,9 +1,15 @@
 <template>
-    <div class="container allprod">
-     <div class="row mb-4">
-             <div class="col"> <FilterComp @apply-filter="newdataDisplay"></FilterComp></div>
-             <!-- <div class="col"><SortComp @apply-sort="newdataDisplay"></SortComp></div>  -->
-            <SearchComp @apply-search="newdataDisplay"></SearchComp> 
+    <div class="container allprod" >
+     <div class="row mb-4 mx-0">
+            
+                <div class="col-sm-12 col-md-4 d-flex justify-content-center align-items-center"> <FilterComp @apply-filter="newdataDisplay"></FilterComp></div>
+                <div class="col-sm-12 col-md-4"><SortComp @apply-sort="newdataDisplay"></SortComp></div> 
+                 
+                 <div class="col-sm-12 col-md-4 d-flex justify-content-center align-items-center">
+                     <SearchComp @apply-search="newdataDisplay"></SearchComp> 
+     
+                 </div>
+            
 
          </div>
          
@@ -11,10 +17,10 @@
              <div class="card mb-5" v-for="product of outputData " :key="product.prodID">
                  <div class="card-body animate__backOutDown">
                      <img :src="product.imageUrl">
-                     <h3 class="mt-2 fw-bold">{{product.prodName}}</h3>
-                     <p class="fw-bold">Price: R {{product.price}}</p>
+                     <h3 class="mt-2 fw-bold fs-4">{{product.prodName}}</h3>
+                     <p class="fw-bold fs-4">Price: R {{product.price}}</p>
                      <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
-                     <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">Add to Cart</router-link>
+                     <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}" >Add to Cart</router-link>
                  </div>
              </div>
  
@@ -25,8 +31,8 @@
                      <div class="img">
                         <img class="img-fluid" :src="product.imageUrl">
                      </div>
-                     <h3 class="mt-2">{{product.prodName}}</h3>
-                     <p>Price: R {{product.price}}</p>
+                     <h3 class="mt-2 fs-4">{{product.prodName}}</h3>
+                     <p class="fs-4 fw-bold">Price: R {{product.price}}</p>
                     <router-link class="btn btn-primary mx-2" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
                     <!-- <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">Add to Cart</router-link> -->
                 </div>
@@ -42,10 +48,10 @@
      import SpinnerComp from '@/components/SpinnerComp.vue';
      import FilterComp from '@/components/FilterComp.vue';
      import SearchComp from './SearchComp.vue';
-    //  import SortComp from '../components/SortComp.vue';
+      import SortComp from '../components/SortComp.vue';
  
      export default{
-     components: { SpinnerComp, FilterComp, SearchComp}, 
+     components: { SpinnerComp, FilterComp, SearchComp,SortComp}, 
      data(){
          return{
              outputData:[],
@@ -85,6 +91,13 @@
          max-width: 300px;
          margin-top: 15px;
      }
+     .allprod{
+        background-image: url();
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+     }
      .btn:hover{
      background:#2c3e50 ;
      padding: 1rem;
@@ -106,7 +119,7 @@
      }*/
      @media screen and (max-width: 300px){
          img{
-             max-width: 300px;
+             max-width: 200px;
          }
         
          

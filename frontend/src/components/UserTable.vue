@@ -3,7 +3,7 @@
       <div class="container">
         <div class="row table-container">
           <div class="col-12">
-            <h1>Users</h1>
+            <h1 class="fs-4 fw-bold text-black">Users</h1>
            <AddUser/>
           </div>
           <div class="col">
@@ -22,7 +22,7 @@
                   <!-- <th>Password</th> -->
                   <th>Role</th>
                   <th>Image</th>
-                  <th>Profile</th>
+                  <!-- <th>Profile</th> -->
                   <th>Edit/Delete</th>
                 </tr>
               </thead>
@@ -36,7 +36,7 @@
                   <td>{{ user.emailAdd}}</td>
                   <!-- <td>{{ user.userPass}}</td> -->
                   <td>{{ user.Role}}</td>
-                  <td><img class="tableImg" :src="user.profileUrl" alt="" /></td>
+                  <!-- <td><img class="tableImg" :src="user.profileUrl" alt="" /></td> -->
                   <td>
                     <button type="button" class="btn btn-primary" @click="setId(user.userID)" data-bs-toggle="modal" data-bs-target="#Update" data-bs-whatever="@mdo">Update</button>
                     <button type="button" class="btn btton" @click="deleteUser(user.userID)" data-bs-toggle="modal" data-bs-target="#exampleModal" id="delete-row" >
@@ -58,7 +58,7 @@
                       <td>{{ user.Role}}</td>    
                       <td><img class="tableImg" :src="user.profileUrl" alt="" /></td>
                      
-                      <router-link class="btn " :to="{ name:'user', params: {id: user.userID}}">View Profile</router-link>
+                      <!-- <router-link class="btn " :to="{ name:'user', params: {id: user.userID}}">View Profile</router-link> -->
                       <td>
                         <button type="button" class="btn " data-bs-toggle="modal" @click="setId(user.userID)" data-bs-target="#Update" data-bs-whatever="@mdo">Update</button>
                         <button
@@ -183,24 +183,7 @@ import AddUser from '@/components/AddUser.vue'
           this.$store.dispatch("getUsers")
       },
       methods:{
-// userID(){
-//   const userData = localStorage.getItem('userData');
-// if (userData) {
-//   // Parse the JSON data from local storage
-//   const userDataObject = JSON.parse(userData);
-  
-//   // Access the userID from userDataObject
-//   const userID = userDataObject.result.userID;
-// console.log(userID);
-//   // Now, you can use the userID as needed in your component
-//   // For example, you can set it to a data property
-//   this.userID = userID;
-// } else {
-//   // Handle the case where userData is not found in local storage
-//   console.error('User data not found in local storage');
-// }
 
-// },
         newdataDisplay(data){
              this.outputData=data;
             
@@ -209,19 +192,43 @@ import AddUser from '@/components/AddUser.vue'
         setId(x){
           this.userID =x
         },
-        updateUser(){
-          // this.$store.dispatch("updateUser",this.data)
-          this.payload.userID = this.userID;
-            this.payload.data = this.data;
-            console.log("Payload to update:", this.payload);
-            this.$store.dispatch("updateUser",this.payload).then(response =>{
-              console.log("Update response:", response);
-            })
-            .catch(error => {
-              console.error("Update error:", error);
-            });
-            console.log(this.data.userID)
+        // updateUser(){
+        //   // this.$store.dispatch("updateUser",this.data)
+        //   // this.payload.userID = this.userID;
+        //   //   this.payload.data = this.data;
+        //   //   console.log("Payload to update:", this.payload);
+        //   //   this.$store.dispatch("updateUser",this.payload).then(response =>{
+        //   //     console.log("Update response:", response);
+        //   //   })
+        //   //   .catch(error => {
+        //   //     console.error("Update error:", error);
+        //   //   });
+        //   //   console.log(this.data.userID)
+
+          
+            
+        // },
+        async updateUser() {
+          try {
+            // Create the payload object
+            const payload = {
+              userID: this.userID, // Assuming this.userID is correctly defined in your component
+              data: this.data,     // Assuming this.data is correctly defined in your component
+            };
+
+            // Dispatch the updateUser action with the payload
+            const response = await this.$store.dispatch('updateUser', payload);
+            console.log('Update response:', response);
+          } catch (error) {
+            console.error('Update error:', error);
+          }
         },
+
+
+
+
+
+
         deleteUser(x){
           this.$store.dispatch("deleteUser",x)
         } 

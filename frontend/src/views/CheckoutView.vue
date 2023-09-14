@@ -1,245 +1,193 @@
 <template>
-    <div class="wrapper">
-    <div class="container">
-        <form action="">
-            <h1>
-                <i class="fas fa-shipping-fast"></i>
-                Shipping Details
-            </h1>
-            <div class="name">
-                <div>
-                    <label for="f-name">First</label>
-                    <input type="text" name="f-name">
-                </div>
-                <div>
-                    <label for="l-name">Last</label>
-                    <input type="text" name="l-name">
-                </div>
-            </div>
-            <div class="street">
-                <label for="name">Street</label>
-                <input type="text" name="address">
-            </div>
-            <div class="address-info">
-                <div>
-                    <label for="city">City</label>
-                    <input type="text" name="city">
-                </div>
-                <div>
-                    <label for="state">State</label>
-                    <input type="text" name="state">
-                </div>
-                <div>
-                    <label for="zip">Zip</label>
-                    <input type="text" name="zip">
-                </div>
-            </div>
-            <h1>
-                <i class="far fa-credit-card"></i> Payment Information
-            </h1>
-            <div class="cc-num">
-                <label for="card-num">Credit Card No.</label>
-                <input type="text" name="card-num">
-            </div>
-            <div class="cc-info">
-                <div>
-                    <label for="card-num">Exp</label>
-                    <input type="text" name="expire">
-                </div>
-                <div>
-                    <label for="card-num">CCV</label>
-                    <input type="text" name="security">
-                </div>
-            </div>
-            <div class="btns">
-                <button>Purchase</button>
-                <button>Previous</button>
-            </div>
-        </form>
+  <div class="container">
+    
+    <div class="mainscreen">
+   
+      <div class="">
+        <p>Your Orders:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Products</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in items" :key="item.cartID">
+              <td>{{ item.prodName }}</td>
+              <td>{{ item.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="cart-summary">
+        <p>Total: </p>
+      </div>
+
+
+        <div class="rightside">
+
+          <form action="">
+            <h2>Billing Address:</h2>
+            <p></p>
+            <h2>Payment Information</h2>
+            <p>Cardholder Name</p>
+            <input type="text" class="inputbox" name="name" required />
+            <p>Card Number</p>
+            <input type="number" class="inputbox" name="card_number" id="card_number" required />
+
+            <p>Card Type</p>
+            <select class="inputbox" name="card_type" id="card_type" required>
+              <option value="">--Select a Card Type--</option>
+              <option value="Visa">Visa</option>
+              <option value="RuPay">RuPay</option>
+              <option value="MasterCard">MasterCard</option>
+            </select>
+          <div class="expcvv">
+
+            <p class="expcvv_text">Expiry</p>
+            <input type="date" class="inputbox" name="exp_date" id="exp_date" required />
+
+            <p class="expcvv_text2">CVV</p>
+            <input type="password" class="inputbox" name="cvv" id="cvv" required />
+          </div>
+            <p></p>
+            <button type="submit" class="button">Pay</button>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 <script>
+  export default{
+    computed:{
 
-    export default{
-        
+
+      mounted() {
+        this.$store.dispatch("getItems");
+    },
     }
+  }
+
 </script>
 <style scoped>
-    body {
-  display: flex;
-  justify-content: center;
+  body {
+    /* font-family: 'Roboto', sans-serif!important; */
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
 }
-
-.wrapper {
-  margin-top: 5%;
-  width: 60%;
-  display: flex;
-  justify-content: center;
-  font-family: "Arimo";
-  background-color: #eb9478;
-  -webkit-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
-  -moz-box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
-  box-shadow: 9px 13px 25px 0px rgba(0, 0, 0, 0.18);
-  animation: slideUp 2000ms ease;
-}
-
-@keyframes slideUp {
-  0% {
-    -webkit-transform: translateY(100%);
-    transform: translateY(100%);
-    visibility: visible;
+img{
+    max-width: 50px;
   }
-  100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
+  .cart-table {
+    max-width: 100%;
+    overflow-x: auto;
   }
-}
-.container {
-  width: 65%;
-  padding: 5% 10%;
-}
-
-h1 {
-  align-self: center;
-}
-
-form {
-  width: 100%;
-}
-form > * {
-  margin-top: 20px;
-}
-form input {
-  width: 100%;
-  min-height: 25px;
-  border: 0;
-  font-size: 1rem;
-  letter-spacing: 0.15rem;
-  font-family: "Arimo";
-  margin-top: 5px;
-  color: #8e2807;
-  border-radius: 4px;
-}
-form label {
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 2px;
-  color: #8e2807;
-}
-form h1 {
-  font-size: 24px;
-  line-height: 10px;
-  color: #493b76;
-  letter-spacing: 1px;
-}
-form h1:nth-of-type(2) {
-  margin-top: 10%;
-}
-
-.name {
-  justify-content: space-between;
-  display: flex;
-  width: 100%;
-}
-.name div {
-  width: 45%;
-}
-
-.address-info {
-  display: flex;
-  justify-content: space-between;
-}
-.address-info div {
-  width: 30%;
-}
-
-.cc-info {
-  display: flex;
-  justify-content: space-between;
-}
-.cc-info div {
-  width: 45%;
-}
-
-.btns {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-.btns button {
-  margin: 3px 0;
-  height: 30px;
-  width: 40%;
-  color: #cfc9e1;
-  background-color: #4a3b76;
-  text-transform: uppercase;
-  border: 0;
-  border-radius: 0.3rem;
-  letter-spacing: 2px;
-}
-.btns button:hover {
-  animation-name: btn-hov;
-  animation-duration: 550ms;
-  animation-fill-mode: forwards;
-}
-
-@keyframes btn-hov {
-  100% {
-    background-color: #cfc9e1;
-    color: #4a3b76;
-    transform: scale(1.05);
-  }
-}
-input:focus,
-button:focus {
-  outline: none;
-}
-
-@media (max-width: 736px) {
-  .wrapper {
+  
+  table {
     width: 100%;
+    border-collapse: collapse;
   }
-
-  .container {
-    width: 100%;
+  
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
   }
-
-  .btns {
-    align-items: center;
-  }
-  .btns button {
-    width: 50%;
-  }
-
-  form h1 {
-    text-align: center;
-  }
-
-  .name,
-.address-info,
-.cc-info {
+/* .mainscreen
+{
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
     flex-direction: column;
-    width: 100%;
+   
+  
+    color:#963E7B;
+} */
+
+
+.rightside {
+    background-color: #ffffff;
+	width: 35rem;
+	border-bottom-right-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    padding: 1rem 2rem 3rem 3rem;
+}
+
+p{
+    display:block;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: .8rem 0;
+}
+
+.inputbox
+{
+    color:#030303;
+	width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 1.5px solid #ccc;
+    margin-bottom: 1rem;
+    border-radius: 0.3rem;
+    font-family: 'Roboto', sans-serif;
+    color: #615a5a;
+    font-size: 1.1rem;
+    font-weight: 500;
+  outline:none;
+}
+
+.expcvv {
+    display:flex;
     justify-content: space-between;
-  }
-  .name div,
-.address-info div,
-.cc-info div {
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    display: flex;
-  }
+    padding-top: 0.6rem;
+}
 
-  .street,
-.cc-num {
-    text-align: center;
-  }
+.expcvv_text{
+    padding-right: 1rem;
+}
+.expcvv_text2{
+    padding:0 1rem;
+}
 
-  input {
-    margin: 5px 0;
-    min-height: 30px;
-  }
+.button{
+    background: linear-gradient(
+135deg
+, #753370 0%, #298096 100%);
+    padding: 15px;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    width:100%;
+    letter-spacing: .11rem;
+    outline:none;
+}
+
+.button:hover
+{
+	transform: scale(1.05) translateY(-3px);
+    box-shadow: 3px 3px 6px #38373785;
+}
+
+@media only screen and (max-width: 1000px) {
+    .card{
+        flex-direction: column;
+        width: auto;
+      
+    }
+
+   
+
+    .rightside{
+        width:auto;
+        border-bottom-left-radius: 1.5rem;
+        padding:0.5rem 3rem 3rem 2rem;
+      border-radius:0;
+    }
 }
 </style>

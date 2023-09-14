@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <h2>Admin</h2>
+            <h1 class="fs-4 fw-bold text-black">Admin</h1>
         <UserTable/>
         <ProdTable/>
     </div>
-    <div class="mt-5">
-        <Footer/>
-    </div>
+        <div class="mt-5">
+            <Footer/>
+        </div>
 </template>
 <script>
 import ProdTable from '@/components/ProdTable.vue';

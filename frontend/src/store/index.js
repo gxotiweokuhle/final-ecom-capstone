@@ -61,7 +61,10 @@ export default createStore({
       } else{
         console.error(`Item with prodID ${prodID} not found in the cart.`);
       }
-    }
+    },
+    removeFromCart(state, cartID) {
+      state.items = state.items.filter(item => item.cartID !== cartID);
+    },
     
    
   },
@@ -190,8 +193,14 @@ export default createStore({
       },
       async updateUser(context,payload){
         try {
-          let {data} =await axios.patch(`${cUrl}user/${payload.userID}`,payload.data)
-          if(data.msg){
+          if(payload.data.userDOB){
+            payload.data.userData = new Date(payload.data.userDOB)
+            .toISOString()
+            .slice(0, 19)
+            .replace('T', ' ');
+          }
+          const response =await axios.patch(`${cUrl}user/${payload.userID}`,payload.data)
+          if(response.data.msg){
             context.dispatch("getUsers")
             swal({
               title:"Update",
@@ -200,6 +209,7 @@ export default createStore({
               timer:2000
             })
           }
+          return response; // Return the response object
         } catch (e) {
           context.commit("setMessage","An error occured")
         }
@@ -297,17 +307,22 @@ export default createStore({
         console.log("User ID:", userID);
         if(userID){
           try{
-            const response = await axios.get(`${cUrl}cart/${userID}`);
-            
-            if (!response.ok) {
-              // context.commit("setItems", data.results)
+            const {data} = await axios.get(`${cUrl}cart/${userID}`);
+            console.log(data.results);
+            if (data.results) {
+              context.commit("setItems", data.results);
+            } else {
               throw Error("Failed to retrieve cart items")
-            } 
-            const data = await response.json();
-            console.log(data);
-            const items = data.results;
-            context.commit("setItems", items);
-            console.log(items);
+            }
+           // if (!response.ok) {
+              // context.commit("setItems", data.results)
+              
+           // } 
+            // const data = await response.json();
+            // console.log(data);
+            // const items = ;
+            
+            // console.log(items);
           } catch(e){
           context.commit("setMessage", "An error occured")
           console.log(e);
@@ -317,53 +332,6 @@ export default createStore({
         }
 
         },
-
-
-      // async addItem(context, {prodID, quantity}){
-        
-      //   try{
-      //       //access userid from ls
-      //   // const userDataJSON = localStorage.getItem('userData');
-      //   // const userData = JSON.parse(userDataJSON);
-
-      //   // const userID = userData.result.userID;
-      //   // console.log(userID);
-
-      //   const userData = localStorage.getItem('userData');
-      //       if (userData) {
-      //         const userDataObject = JSON.parse(userData);
-      //         const userID = userDataObject.result.userID;
-      //         console.log(userID);
-      //         this.userID = userID;
-      //       } else {
-      //         console.error('User data not found in local storage');
-      //       }
-        
-      //     const response = await  axios.post(`${cUrl}user/${userID}/cart`, {
-      //         prodID,
-      //         quantity,
-      //     }, {
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //     });
-
-
-
-      //     if (!response.ok) {
-      //       throw Error(`Failed to add item to cart. Status: ${response.status}`)
-      //     } 
-
-      //     const data = await response.json();
-      //     context.commit('setToCart', data.result);
-          
-
-      //   } catch (error){
-      //     console.error(error);
-      //   }
-      // },
-
-
 
       async addItem(context, { prodID, quantity }) {
         try {
@@ -421,7 +389,21 @@ export default createStore({
         }
       },
 
+      async removeItem(context, cartID){
+        const userID = context.state.userData.result.userID;
+        console.log("User ID:", userID, "Cart ID:", cartID);
 
+
+        try{
+          const response = await axios.delete(`${cUrl}cart/${userID}/${cartID}`);
+          if(response.status !== 204){
+            throw Error("Failed to remove item from cart");
+          }
+          context.commit("removeFromCart", cartID);
+        }catch(error){
+          context.commit("setMessage", msg);
+        }
+      }
 
 
 

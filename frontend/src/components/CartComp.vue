@@ -3,6 +3,7 @@
       <table>
         <thead>
           <tr>
+            <th>Image</th>
             <th>Product</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -12,15 +13,16 @@
         </thead>
         <tbody>
           <tr v-for="item in items" :key="item.cartID">
+            <td><img :src="item.imageUrl" class="rounded-circle" ></td>
             <td>{{ item.prodName }}</td>
             <td>{{ item.price }}</td>
             <td>
-              <input type="number" v-model="item.quantity" min="1" @input="updateTotal(item)" />
+              <input type="number" v-model="item.quantity" min="1" @input="updateTotal()" />
             </td>
             <td>R {{ item.quantity * item.price }}</td>
             <td></td>
             <td>
-              <button  v-if="item.cartID"    @click="removeItem(item.cartID)">Remove</button>
+              <button  v-if="item.cartID"  @click="removeItem(item.cartID)">Remove</button>
             </td>
           </tr>
         </tbody>
@@ -43,7 +45,11 @@
             },
         // userData() {
         // return this.$store.state.userData; // Assuming you have a state named userData
-          
+        cartTotal() {
+          return this.items.reduce((total, item) => {
+        return total + item.quantity * item.price;
+      }, 0);
+    }, 
     },
     mounted() {
         this.$store.dispatch("getItems");
@@ -54,18 +60,7 @@
       // Call the setToCart mutation with the desired prodID and quantity
       this.$store.commit('setToCart', { prodID: '123', quantity: 3 });
     },
-    //     addItem(prodID) {
-    //   // Ensure the user is logged in
-    //   if (this.userData && this.userData.userID) {
-    //     // Call the addToCart action with userID and prodID
-    //     this.$store.dispatch('addItem', {
-    //       userID: this.userData.userID,
-    //       prodID,
-    //     });
-    //   } else {
-    //     // Handle the case where the user is not logged in, prompt for login, etc.
-    //   }
-    // },
+   
       removeItem(cartID){
         this.$store.dispatch("removeItem", cartID);
         console.log(cartID);
@@ -82,6 +77,9 @@
   </script>
   
   <style scoped>
+  img{
+    max-width: 50px;
+  }
   .cart-table {
     max-width: 100%;
     overflow-x: auto;

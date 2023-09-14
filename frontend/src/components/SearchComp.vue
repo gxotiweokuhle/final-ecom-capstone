@@ -1,5 +1,5 @@
 <template>
-    <div class="InputContainer">
+    <div class="InputContainer p-2">
  
          <input placeholder="Search.." id="input" v-model="searchInput" class="input" name="text" type="text">
    
@@ -17,40 +17,29 @@
            products() {
                return this.$store.state.products;
            },
-          //  filter(){
-          //      if(this.sData){
-          //         return this.products.filter(item => item.prodName.includes(this.sData))
-          //      }
-          //  }
-                filteredProducts() {
-                  const searchQuery = this.searchInput.toLowerCase();
-                  return this.products.filter(
+           filteredProducts() {
+                  if (this.searchInput.toLowerCase() !=" ") {
+                    return this.products.filter(
                     (product) =>
-                      product.prodName.toLowerCase().includes(searchQuery) ||
-                      product.category.toLowerCase().includes(searchQuery)
-                  );
+                      product.prodName.toLowerCase().includes(this.searchInput.toLowerCase()) ||
+                      product.category.toLowerCase().includes(this.searchInput.toLowerCase())
+                  ); 
+                  } 
             },
-       filterProducts() {
-      const searchQuery = this.searchInput.toLowerCase();
-      this.products = this.sortedProducts.filter(
-        (product) =>
-          product.prodName.toLowerCase().includes(searchQuery) ||
-          product.Category.toLowerCase().includes(searchQuery)
-      );
-    },
-      //  watch:{
-      //    filter(data){
-      //      this.$emit("apply-search", data)
-      //    }
+          },
+       watch:{
+        filteredProducts(data){
+           this.$emit("apply-search", data)
+         }
      
-      //  },
+       },
        methods:{
            
        },
        mounted() {
            this.$store.dispatch("getProducts");
        }
-   }
+   
   }
  
  </script>
