@@ -5,7 +5,7 @@ const db = require('../config')
 class Cart{
     getItems(req,res, userID){
         const query =`
-        SELECT c.prodID, c.quantity, p.prodName, p.price, p.imageUrl
+        SELECT c.cartID, c.quantity, p.prodName, p.price, p.imageUrl
         FROM Cart c
         JOIN Products p ON c.prodID = p.prodID;
         WHERE c.userID = ?;
