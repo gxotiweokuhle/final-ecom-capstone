@@ -64,14 +64,14 @@ routes.post('/items/:userID',bodyParser.json(),(req,res)=>{
     cart.addItem(req,res, userID, prodID, quantity)
 });
 
-routes.put('/cart/:id/cart',bodyParser.json(),(req,res)=>{
+routes.put('/cart/:userID/:cartID',bodyParser.json(),(req,res)=>{
     const userID = req.params.userID;
     const cartID = req.params.cartID;
     const {quantity} = req.body;
     cart.updateItem(req,res, userID, cartID, quantity)
 });
 
-routes.delete('/cart/:id/cart',(req,res)=>{
+routes.delete('/cart/:userID/:cartID',(req,res)=>{
     const userID = req.params.userID;
     const cartID = req.params.cartID;
     const {quantity} = req.body;
