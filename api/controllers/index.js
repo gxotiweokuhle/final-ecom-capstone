@@ -2,7 +2,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const routes = express.Router()
-const {users,products,cart,orders} = require('../models')
+const {users,products,cart} = require('../models')
 
 //User routes
 routes.get('/users',(req,res)=>{
@@ -54,18 +54,29 @@ routes.get('/cart/:userID',(req,res)=>{
     const userID = req.params.userID;
     if(!userID){
         return res.status(400).json({ message: 'userID is required' });
-
     }
-})
+    cart.getItems(req, res, userID);
+});
+
 routes.post('/items/:userID',bodyParser.json(),(req,res)=>{
-    cart.addItem(req,res)
-})
-routes.put('/user/:id/cart',bodyParser.json(),(req,res)=>{
-    cart.updateItem(req,res)
-})
-routes.delete('/user/:id/cart',(req,res)=>{
-    cart.deleteItem(req,res)
-})
+    const userID = req.params.userID;
+    const {prodID, quantity} = req.body;
+    cart.addItem(req,res, userID, prodID, quantity)
+});
+
+routes.put('/cart/:id/cart',bodyParser.json(),(req,res)=>{
+    const userID = req.params.userID;
+    const cartID = req.params.cartID;
+    const {quantity} = req.body;
+    cart.updateItem(req,res, userID, cartID, quantity)
+});
+
+routes.delete('/cart/:id/cart',(req,res)=>{
+    const userID = req.params.userID;
+    const cartID = req.params.cartID;
+    const {quantity} = req.body;
+    cart.deleteItem(req,res, userID, cartID, quantity)
+});
 
 module.exports ={
     express,
