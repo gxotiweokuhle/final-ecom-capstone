@@ -7,11 +7,12 @@ class Cart{
         const query =`
         SELECT c.cartID, c.quantity, p.prodName, p.price, p.imageUrl
         FROM Cart c
-        JOIN Products p ON c.prodID = p.prodID;
+        JOIN Products p ON c.prodID = p.prodID
         WHERE c.userID = ?;
-        `
+        `;
         db.query(query,[userID],(err,results)=>{
             if(err) {
+                console.log(err);
                 res.status(500).json({ message: 'Internal Server Error' });
             }   else {
                 res.json({ status: res.statusCode, results })
