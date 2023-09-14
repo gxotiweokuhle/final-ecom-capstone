@@ -35,6 +35,11 @@
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="/contact">Contact</a>
         </li>
+        <!-- <li class="nav-item">
+          
+          <router-link class="nav-link active text-white" :to="{ name:'user', params: {id: user.userID}}">View Profile</router-link>
+          <a class="nav-link active text-white" aria-current="page" href="/user/:id">Profile</a>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="/admin">Admin</a>
         </li>
