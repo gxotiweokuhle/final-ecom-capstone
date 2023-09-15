@@ -3,7 +3,7 @@
        <!--hero-->
        <section class=" overflow-x-hidden hero m-0 align-content-sm-start">
               <div class="hero-inner text-center">
-                    <a href="/products" class="btn mb-2 text-white">Shop Now!</a>
+                    <a href="/products" class="btn mb-2 text-white"  v-show="isLogged">Shop Now!</a>
               </div>
             </section>
 
@@ -34,7 +34,7 @@
                       View our painting collection made by our top South African Artist and shop quality art.
                   </p>
                   <button class="shadow__btn">
-                    <a href="/products" >Shop Now!</a>
+                    <a href="/products"  v-show="isLogged">Shop Now!</a>
                   </button>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                     View our sculpting collection made by our top South African Artist and shop quality statues.
                   </p>
                   <button class="shadow__btn">
-                    <a href="/products" >Shop Now!</a>
+                    <a href="/products"  v-show="isLogged" >Shop Now!</a>
                   </button>
                 </div>
               </div>
@@ -74,7 +74,7 @@
                   View our photography collection made by our top South African and shop quality artwork.
                 </p>
                 <button class="shadow__btn">
-                  <a href="/products">Shop Now!</a>
+                  <a href="/products"  v-show="isLogged">Shop Now!</a>
                   </button>
               </div>
             </div>
