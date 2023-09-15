@@ -18,9 +18,7 @@ export default createStore({
     msg:null, 
     err: null,
     token: null,
-    items: [],
-
-   
+    items: [],   
   },
 
   mutations: {
@@ -65,7 +63,11 @@ export default createStore({
     removeFromCart(state, cartID) {
       state.items = state.items.filter(item => item.cartID !== cartID);
     },
-    
+    clearUser(state) {
+      state.user = null;
+      state.token = null;
+      // state.isLoggedIn = false;
+    }
    
   },
   actions: {
@@ -389,26 +391,46 @@ export default createStore({
         }
       },
 
-      async removeItem(context, cartID){
-        const userID = context.state.userData.result.userID;
-        console.log("User ID:", userID, "Cart ID:", cartID);
-
-
-        try{
-          const response = await axios.delete(`${cUrl}cart/${userID}/${cartID}`);
-          if(response.status !== 204){
-            throw Error("Failed to remove item from cart");
+      async removeItem(context, cartID) {
+        try {
+          const userData = localStorage.getItem('userData');
+      
+          if (userData) {
+            const userDataObject = JSON.parse(userData);
+            const userID = userDataObject.result.userID;
+      
+            try{
+              const response = await axios.delete(`${cUrl}cart/${userID}/${cartID}`);
+              if(response.status !== 204){
+                throw Error("Failed to remove item from cart");
+              }
+              context.commit("removeFromCart", cartID);
+            }catch(error){
+              context.commit("setMessage", error);
+            }  
+          } else {
+            console.error('User data not found in local storage');
           }
-          context.commit("removeFromCart", cartID);
-        }catch(error){
-          context.commit("setMessage", msg);
+        } catch (error) {
+          console.error(error);
         }
-      }
+      },
 
 
 
-
-
+      
+      logout({commit}) {
+      
+        
+        // Clear local storage
+        localStorage.removeItem('cart')
+        localStorage.removeItem('userData');
+        localStorage.removeItem('userToken');
+        commit("clearUser");
+      
+    
+        window.location.reload();
+      },
 
 
 

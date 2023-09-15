@@ -20,12 +20,12 @@
                      <h3 class="mt-2 fw-bold fs-4">{{product.prodName}}</h3>
                      <p class="fw-bold fs-4">Price: R {{product.price}}</p>
                      <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
-                     <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}" >Add to Cart</router-link>
+                     <!-- <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}" >Add to Cart</router-link> -->
                  </div>
              </div>
  
          </div>
-         <div class="flex-container" v-else-if="products" id="procard">
+         <!-- <div class="flex-container" v-else-if="products" id="procard">
              <div class="card mb-5" v-for="product of products" :key="product.prodID">
                  <div class="card-body">
                      <div class="img">
@@ -34,13 +34,14 @@
                      <h3 class="mt-2 fs-4">{{product.prodName}}</h3>
                      <p class="fs-4 fw-bold">Price: R {{product.price}}</p>
                     <router-link class="btn btn-primary mx-2" :to="{ name:'product', params: {id: product.prodID}}">View More</router-link>
-                    <!-- <router-link class="btn" :to="{ name:'product', params: {id: product.prodID}}">Add to Cart</router-link> -->
+                   
                 </div>
              </div>
-         </div>
+         </div> -->
          <div v-else>
          <SpinnerComp/>
          </div>
+         
     </div>
  </template>
  
@@ -49,6 +50,7 @@
      import FilterComp from '@/components/FilterComp.vue';
      import SearchComp from './SearchComp.vue';
       import SortComp from '../components/SortComp.vue';
+
  
      export default{
      components: { SpinnerComp, FilterComp, SearchComp,SortComp}, 
@@ -91,13 +93,7 @@
          max-width: 300px;
          margin-top: 15px;
      }
-     .allprod{
-        background-image: url();
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-     }
+   
      .btn:hover{
      background:#2c3e50 ;
      padding: 1rem;
@@ -117,13 +113,13 @@
      /* .card-body:hover{
          box-shadow: 0px 0px 30px 20px rgb(229, 196, 30);
      }*/
-     @media screen and (max-width: 300px){
+     /* @media screen and (max-width: 300px){
          img{
              max-width: 200px;
          }
         
          
-     }
+     } */
      @media screen and (max-width: 312px){
          img{
              max-width: 190px;

@@ -43,7 +43,7 @@
                         <span>Role</span>
                     </label>
                     <button class="submit fs-4">Submit</button>
-                    <p class="signin text-white fs-5">Already have an account ? <a href="/user/login" class="fs-4">Signin</a> </p>
+                    <p class="signin text-white fs-5">Already have an account ? <a href="/user/login" class="fs-4 sign">Signin</a> </p>
 </form>
 
     </div>
@@ -129,7 +129,11 @@ export default{
 }
 a{
   text-decoration: none;
+  color:rgb(200,160,4);
   
+}
+.sign{
+  color:rgb(200,160,4);
 }
 .reg{
   background: rgb(200, 160, 4);

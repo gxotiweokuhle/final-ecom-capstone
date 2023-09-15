@@ -39,6 +39,7 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 export default {
   // props: ["id"],
   computed: {
@@ -57,6 +58,14 @@ export default {
   methods:{
     addItem(prodID, quantity){
       this.$store.dispatch("addItem", {prodID, quantity});
+   
+      Swal.fire({
+        icon: 'success', // Set the icon (success, error, warning, etc.)
+        title: 'Item Added to Cart',
+        text: 'The item has been successfully added to your cart.',
+        confirmButtonText: 'OK',
+      });
+   
     }
   }
   
@@ -76,6 +85,9 @@ export default {
       align-content: center;
       flex-wrap: wrap;
     } */
+    .btn :hover{
+      background-color: black;
+    }
     * {
 margin: 0;
 padding: 0;
@@ -84,28 +96,13 @@ box-sizing: border-box;
 h5, p, button{
 font-family: 'REM', sans-serif;
 }
-button:hover{
+/* button:hover{
 background: rgb(200,160,4);
 padding: 1rem;
 color:#2c3e50
-}
-.addp {
-margin-top: 3rem;
-border-top: 2px solid black;
-}
-.ad {
-float: right;
-margin-top: 1rem;
-}
-.heading {
-display: flex;
-justify-content: center;
-align-items: center;
-padding-top: 3rem;
-}
-.line {
-border: 3px solid black;
-/* border: none; */
+} */
+button{
+  padding: 0.5rem;
 }
 .cont-fluid {
 width: 50%;
@@ -283,7 +280,7 @@ border: 3px solid black;
   text-align: center;
 }
 .btn{
-  width: 100px;
+  /* width: 100px; */
   background: rgb(200,160,4);
 box-shadow: 0 0 25px rgb(200,160,4);
 }

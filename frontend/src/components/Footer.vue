@@ -37,14 +37,31 @@
           </p>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <!-- <div class="col-md-4 col-sm-6 col-xs-12">
           <ul class="social-icons">
               <i class="fa-brands fa-facebook fa-beat-fade fa-lg" style="color: #0a64ff;"></i>    
           <i class="fa-brands fa-instagram fa-beat-fade" style="color: #ca1fe0;"></i>
           <i class="fa-brands fa-twitter fa-beat-fade" style="color: #003899;"></i>
           <i class="fa-brands fa-linkedin fa-beat-fade" style="color: #00328a;"></i>  
           </ul>
-        </div>
+        </div> -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <a href="https://www.facebook.com/" target="_blank">
+                <i class="fa-brands fa-facebook fa-beat-fade fa-lg" style="color: #0a64ff;"></i>
+              </a>
+              <a href="https://www.instagram.com/okuhle_g14/" target="_blank">
+                <i class="fa-brands fa-instagram fa-beat-fade" style="color: #ca1fe0;"></i>
+              </a>
+              <a href="https://twitter.com/home" target="_blank">
+                <i class="fa-brands fa-twitter fa-beat-fade" style="color: #003899;"></i>
+              </a>
+              <a href="https://www.linkedin.com/feed/" target="_blank">
+                <i class="fa-brands fa-linkedin fa-beat-fade" style="color: #00328a;"></i>
+              </a>
+            </ul>
+       </div>
+
       </div>
     </div>
 </footer>

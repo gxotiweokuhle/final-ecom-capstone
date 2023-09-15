@@ -13,6 +13,7 @@
               searchInput: "",
            }
        },
+
        computed: {
            products() {
                return this.$store.state.products;
@@ -33,15 +34,13 @@
          }
      
        },
-       methods:{
-           
-       },
+      
        mounted() {
            this.$store.dispatch("getProducts");
        }
    
   }
- 
+
  </script>
  <style scoped>
      .InputContainer {

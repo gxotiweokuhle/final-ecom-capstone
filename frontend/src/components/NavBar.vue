@@ -8,9 +8,9 @@
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
+          <a class="nav-link active text-white" aria-current="page" href="/" v-show="isLogged">Home</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-items dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account
           </a>
@@ -20,12 +20,14 @@
             <li><a class="dropdown-item text-white" v-show="isLogged" href="/user/:id">Profile</a></li>
           </ul>
         </li>
-
         <li class="nav-item">
-          <a class="nav-link active text-white " href="/products">Products</a>
+          <a class="nav-link active text-white btn-logout" @click="logout" v-show="isLogged">Logout</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active text-white " href="/items/:userID">Cart</a>
+          <a class="nav-link active text-white " href="/products" v-show="isLogged">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active text-white " href="/items/:userID" v-show="isLogged">Cart</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="/about">About</a>
@@ -36,13 +38,8 @@
         <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="/contact">Contact</a>
         </li>
-        <!-- <li class="nav-item">
-          
-          <router-link class="nav-link active text-white" :to="{ name:'user', params: {id: user.userID}}">View Profile</router-link>
-          <a class="nav-link active text-white" aria-current="page" href="/user/:id">Profile</a>
-        </li> -->
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/admin">Admin</a>
+          <a class="nav-link active text-white" aria-current="page"  v-show="sAdmin " href="/admin">Admin</a>
         </li>
       </ul>
     
@@ -57,28 +54,50 @@ export default{
         return this.$store.state.user || JSON.parse(localStorage.getItem("userData"))
       },
       sAdmin() {
-        console.log(this.user.result?.Role?.toLowerCase() == "admin");
-        return this.user.result?.Role?.toLowerCase() == "admin";
-      },
+        // console.log(this.user.result?.Role?.toLowerCase() == "admin");
+        // return this.user.result?.Role?.toLowerCase() == "admin";
+                return (
+              this.user &&
+              this.user.result &&
+              this.user.result.Role &&
+              this.user.result.Role.toLowerCase() === "admin"
+            );
+          },
+
       isUser() {
-        console.log(this.result?.Role?.toLowerCase() == "user");
-        return this.user.result?.Role?.toLowerCase() == "user";
+        // console.log(this.result?.Role?.toLowerCase() == "user");
+        // return this.user.result?.Role?.toLowerCase() == "user";
+              return (
+            this.user &&
+            this.user.result &&
+            this.user.result.Role &&
+            this.user.result.Role.toLowerCase() === "user"
+          );
       },
       isLogged(){
-        console.log(!this.user.result == " ");
-        return !this.user.result == " ";
+        // console.log(!this.user.result == " ");
+        // return !this.user.result == " ";
+        // return !!this.user && !!this.user.result && this.user.result.Role?.toLowerCase() === "user";
+
+        return !!this.user && !!this.user.result && ["admin", "user"].includes(this.user.result.Role);
       }
-
-
-
-
-
     },
     mounted(){
       console.log(this.user.result);
+          if (this.user && this.user.result) {
+        console.log(this.user.result);
+      } else {
+        console.log("User data is not available.");
+      }
+  
     },
+ 
     methods:{
-
+      logout() {
+    this.$store.dispatch('logout');
+    this.$router.push('/user/login'); 
+    // Optionally, navigate the user to a different route or perform other actions after logout.
+  }
     }
 }
 </script>

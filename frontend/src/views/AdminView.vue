@@ -12,6 +12,7 @@
 import ProdTable from '@/components/ProdTable.vue';
 import UserTable from '@/components/UserTable.vue';
 import Footer from '@/components/Footer.vue';
+
  export default{
     components:{ProdTable, UserTable, Footer}
  }

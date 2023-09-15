@@ -1,56 +1,51 @@
 <template>
-    <div class="cart-table">
+    <div class="cart-table bg-light mt-4">
       <table>
         <thead>
           <tr>
-            <th>Image</th>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Action</th>
+            <th class="fs-4 text-black">Image</th>
+            <th class="fs-4 text-black">Product</th>
+            <th class="fs-4 text-black">Price</th>
+            <!-- <th>Quantity</th> -->
+            <!-- <th>Total</th> -->
+            <th class="fs-4 text-black">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in items" :key="item.cartID">
             <td><img :src="item.imageUrl" class="rounded-circle" ></td>
-            <td>{{ item.prodName }}</td>
-            <td>{{ item.price }}</td>
-            <td>
+            <td class="fs-5 fw-bold text-black">{{ item.prodName }}</td>
+            <td class="fw-bold text-black">{{ item.price }}</td>
+            <!-- <td>
               <input type="number" v-model="item.quantity" min="1" @input="updateTotal()" />
-            </td>
-            <td>R {{ item.quantity * item.price }}</td>
-            <td></td>
+            </td> -->
+            <!-- <td>R {{ item.quantity * item.price }}</td> -->
+         
             <td>
-              <button  v-if="item.cartID"  @click="removeItem(item.cartID)">Remove</button>
+              <button  v-if="item.cartID"  @click="removeItem(item.cartID)" class="mb-3 btn fw-bold text-white">Remove</button>
             </td>
           </tr>
         </tbody>
       </table>
-      <div class="cart-summary">
+      <!-- <div class="cart-summary">
         <p>Total: {{ cartTotal }}</p>
-      </div>
-      <div>
-        <button><a href="/orders">Proceed to Checkout</a></button>
+      </div> -->
+      <div class="mb-3 mt-2">
+        <button><a href="/orders" class="text-black fw-bold fs-6 pro">Proceed to Checkout</a></button>
       </div>
     </div>
   </template>
   
   <script>
+  import Swal from 'sweetalert2'
   export default {
     props:["cart"],
     computed: {
         items() {
             return this.$store.state.items;
             },
-        // userData() {
-        // return this.$store.state.userData; // Assuming you have a state named userData
-        cartTotal() {
-          return this.items.reduce((total, item) => {
-        return total + item.quantity * item.price;
-      }, 0);
+
     }, 
-    },
     mounted() {
         this.$store.dispatch("getItems");
     },
@@ -63,7 +58,27 @@
    
       removeItem(cartID){
         this.$store.dispatch("removeItem", cartID);
-        console.log(cartID);
+        console.log("Deleting:", cartID);
+
+        Swal.fire({
+        title: 'Remove Item',
+        text: 'Are you sure you want to remove this item from your cart?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, remove it',
+        cancelButtonText: 'No, keep it',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // If the user confirms, remove the item from the cart
+          this.$store.dispatch("removeItem", cartID);
+          console.log("Deleted:", cartID);
+
+          // Show a success message
+          Swal.fire('Item Removed', 'The item has been removed from your cart.', 'success');
+          window.location.reload();
+        }
+      });
+
       }
       // updateQuantity(item){
       //   this.$store.dispatch('updateQuantity', {
@@ -73,7 +88,7 @@
       //   })
       // }
   }
-}
+};
   </script>
   
   <style scoped>
@@ -84,10 +99,15 @@
     max-width: 100%;
     overflow-x: auto;
   }
-  
+  a{
+    text-decoration: none;
+    color: black;
+    font-family: 'REM', sans-serif;
+  }
   table {
     width: 100%;
     border-collapse: collapse;
+    font-family: 'REM', sans-serif;
   }
   
   th,
@@ -96,10 +116,15 @@
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
-  
-  .cart-summary {
-    margin-top: 20px;
-    text-align: right;
-  }
+  .btn{
+ 
+  background: rgb(200, 4, 4);
+
+}
+
+button{
+ 
+  background: rgb(18, 235, 36);
+}
   </style>
   

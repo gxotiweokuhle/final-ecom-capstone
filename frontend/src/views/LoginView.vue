@@ -75,6 +75,8 @@ import Swal from "sweetalert2";
 }
 a{
   text-decoration: none;
+  color:rgb(200,160,4);
+
 }
 .container{
     display: flex;

@@ -4,53 +4,58 @@
     <div class="mainscreen">
    
       <div class="">
-        <p>Your Orders:</p>
-        <table>
+        <p class="fs-5 fw-bold text-black">Your Orders:</p>
+        <table class="bg-light">
           <thead>
             <tr>
-              <th>Products</th>
-              <th>Price</th>
+              <th class="fs-5 fw-bold text-black">Products</th>
+              <th class="fs-5 fw-bold text-black">Price</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in items" :key="item.cartID">
-              <td>{{ item.prodName }}</td>
-              <td>{{ item.price }}</td>
+              <td class="fs-5 fw-bold text-black">{{ item.prodName }}</td>
+              <td class="fs-5 fw-bold text-black">{{ item.price }}</td>
             </tr>
           </tbody>
         </table>
-        <div class="cart-summary">
+        <!-- <div class="cart-summary">
         <p>Total: </p>
-      </div>
+      </div> -->
 
 
-        <div class="rightside">
+        <div class="rightside mt-5">
 
-          <form action="">
-            <h2>Billing Address:</h2>
-            <p></p>
-            <h2>Payment Information</h2>
-            <p>Cardholder Name</p>
-            <input type="text" class="inputbox" name="name" required />
-            <p>Card Number</p>
-            <input type="number" class="inputbox" name="card_number" id="card_number" required />
+          <form action="" @submit="submitPayment">
+            <h2 class="fs-5 fw-bold text-black">Billing Address:</h2>
+              <div class="form mb-2">
+                <input class="inputbox" placeholder="Type your address" required="" type="text">
+                <span class="input-border"></span>
+             </div>
+            
+            <h2 class="fs-5 fw-bold text-black">Payment Information:</h2>
+          
+            <p class="fs-5 fw-bold text-black mt-5">Cardholder Name</p>
+            <input type="text" class="inputbox" name="name" placeholder="card owner" required />
+            <p class="fs-5 fw-bold text-black">Card Number</p>
+            <input type="number" class="inputbox" name="card_number" id="card_number" placeholder="type your card number"    required />
 
-            <p>Card Type</p>
+            <p class="fs-5 fw-bold text-black">Card Type</p>
             <select class="inputbox" name="card_type" id="card_type" required>
-              <option value="">--Select a Card Type--</option>
-              <option value="Visa">Visa</option>
-              <option value="RuPay">RuPay</option>
-              <option value="MasterCard">MasterCard</option>
+              <option value="" class=" fw-bold text-black">--Select a Card Type--</option>
+              <option value="Visa" class=" fw-bold text-black" >Visa</option>
+              <option value="RuPay" class=" fw-bold text-black">RuPay</option>
+              <option value="MasterCard" class=" fw-bold text-black">MasterCard</option>
             </select>
           <div class="expcvv">
 
-            <p class="expcvv_text">Expiry</p>
-            <input type="date" class="inputbox" name="exp_date" id="exp_date" required />
+            <p class="expcvv_text fw-bold text-black">Expiry</p>
+            <input type="date" class="inputbox semi-bold text-black" name="exp_date" id="exp_date" required />
 
-            <p class="expcvv_text2">CVV</p>
+            <p class="expcvv_text2 fw-bold text-black">CVV</p>
             <input type="password" class="inputbox" name="cvv" id="cvv" required />
           </div>
-            <p></p>
+            
             <button type="submit" class="button">Pay</button>
           </form>
         </div>
@@ -59,20 +64,53 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
+import router from '@/router';
   export default{
     computed:{
-
-
-      mounted() {
-        this.$store.dispatch("getItems");
+      items() {
+            return this.$store.state.items;
+            },
     },
+
+    mounted() {
+      this.$store.dispatch("getItems");
+    },
+
+    methods: {
+  submitPayment(event) {
+    event.preventDefault();
+
+    const paymentSuccessful = true; 
+
+    if (paymentSuccessful) {
+     
+      Swal.fire({
+        icon: 'success',
+        title: 'Payment Successful',
+        text: 'Thank you for your payment!',
+      }).then(() => {
+        // Redirect to the products page
+        router.push('/products'); 
+      });
+    } else {
+   
+      Swal.fire({
+        icon: 'error',
+        title: 'Payment Failed',
+        text: 'Sorry, there was an issue processing your payment. Please try again.',
+      });
     }
-  }
+  },
+},
+
+
+  };
 
 </script>
 <style scoped>
   body {
-    /* font-family: 'Roboto', sans-serif!important; */
+   
 	margin:0;
 	padding:0;
 	box-sizing: border-box;
@@ -80,14 +118,11 @@
 img{
     max-width: 50px;
   }
-  .cart-table {
-    max-width: 100%;
-    overflow-x: auto;
-  }
   
-  table {
+  table, p , h2{
     width: 100%;
     border-collapse: collapse;
+    font-family: 'REM', sans-serif;
   }
   
   th,
@@ -96,16 +131,7 @@ img{
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
-/* .mainscreen
-{
-	min-height: 100vh;
-	width: 100%;
-	display: flex;
-    flex-direction: column;
-   
-  
-    color:#963E7B;
-} */
+
 
 
 .rightside {
@@ -126,7 +152,7 @@ p{
 .inputbox
 {
     color:#030303;
-	width: 100%;
+	  width: 70%;
     padding: 0.5rem;
     border: none;
     border-bottom: 1.5px solid #ccc;
@@ -153,17 +179,15 @@ p{
 }
 
 .button{
-    background: linear-gradient(
-135deg
-, #753370 0%, #298096 100%);
-    padding: 15px;
+
+    padding: 12px;
     border: none;
     border-radius: 50px;
-    color: white;
-    font-weight: 400;
+    background: rgb(200, 160, 4);
+    font-weight: 200;
     font-size: 1.2rem;
     margin-top: 10px;
-    width:100%;
+    width:60%;
     letter-spacing: .11rem;
     outline:none;
 }
@@ -190,4 +214,5 @@ p{
       border-radius:0;
     }
 }
+
 </style>
